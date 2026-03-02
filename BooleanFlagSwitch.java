@@ -1,137 +1,137 @@
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Java boolean 函数标志开关示例
+ * Java boolean function flag switch examples.
  *
- * 演示三种常见的布尔标志开关用法：
- * 1. 简单 boolean 标志变量
- * 2. 线程安全的 AtomicBoolean 开关
- * 3. 基于 boolean 函数参数的功能开关
+ * Demonstrates three common boolean flag/switch patterns:
+ * 1. Simple boolean field flag
+ * 2. Thread-safe AtomicBoolean switch
+ * 3. Boolean method-parameter feature switch
  */
 public class BooleanFlagSwitch {
 
     // -----------------------------------------------------------------------
-    // 1. 简单 boolean 标志变量（单线程环境）
+    // 1. Simple boolean field flag (single-threaded environment)
     // -----------------------------------------------------------------------
     private boolean enabled = false;
 
-    /** 打开开关 */
+    /** Turns the switch on. */
     public void enable() {
         this.enabled = true;
     }
 
-    /** 关闭开关 */
+    /** Turns the switch off. */
     public void disable() {
         this.enabled = false;
     }
 
-    /** 切换开关状态 */
+    /** Toggles the switch state. */
     public void toggle() {
         this.enabled = !this.enabled;
     }
 
-    /** 查询开关状态 */
+    /** Returns the current switch state. */
     public boolean isEnabled() {
         return this.enabled;
     }
 
-    /** 根据开关状态执行不同逻辑 */
+    /** Executes different logic based on the switch state. */
     public void doWork() {
         if (enabled) {
-            System.out.println("[简单标志] 开关已开启，执行业务逻辑");
+            System.out.println("[Simple flag] Switch is ON - executing business logic");
         } else {
-            System.out.println("[简单标志] 开关已关闭，跳过业务逻辑");
+            System.out.println("[Simple flag] Switch is OFF - skipping business logic");
         }
     }
 
     // -----------------------------------------------------------------------
-    // 2. 线程安全的 AtomicBoolean 开关（多线程环境）
+    // 2. Thread-safe AtomicBoolean switch (multi-threaded environment)
     // -----------------------------------------------------------------------
     private final AtomicBoolean atomicFlag = new AtomicBoolean(false);
 
-    /** 原子性地打开开关，返回旧值 */
+    /** Atomically sets the switch to true; returns the previous value. */
     public boolean atomicEnable() {
         return atomicFlag.getAndSet(true);
     }
 
-    /** 原子性地关闭开关，返回旧值 */
+    /** Atomically sets the switch to false; returns the previous value. */
     public boolean atomicDisable() {
         return atomicFlag.getAndSet(false);
     }
 
-    /** 原子性地比较并设置开关：仅当当前值为 expect 时才设置为 update */
+    /** Atomically sets the switch to {@code update} only if the current value equals {@code expect}. */
     public boolean atomicCompareAndSet(boolean expect, boolean update) {
         return atomicFlag.compareAndSet(expect, update);
     }
 
-    /** 查询原子开关状态 */
+    /** Returns the current atomic switch state. */
     public boolean isAtomicEnabled() {
         return atomicFlag.get();
     }
 
     // -----------------------------------------------------------------------
-    // 3. 函数参数作为功能开关（方法级标志）
+    // 3. Boolean method-parameter feature switch (method-level flag)
     // -----------------------------------------------------------------------
 
     /**
-     * 发送消息，通过 boolean 参数控制是否启用调试日志
+     * Sends a message, with optional debug logging controlled by a boolean parameter.
      *
-     * @param message  要发送的消息
-     * @param debugLog 是否打印调试日志
+     * @param message  the message to send
+     * @param debugLog whether to print debug log output
      */
     public void sendMessage(String message, boolean debugLog) {
         if (debugLog) {
-            System.out.println("[DEBUG] 准备发送消息: " + message);
+            System.out.println("[DEBUG] Preparing to send message: " + message);
         }
-        // 模拟消息发送
-        System.out.println("[发送] " + message);
+        // simulate sending the message
+        System.out.println("[SEND] " + message);
         if (debugLog) {
-            System.out.println("[DEBUG] 消息发送完成");
+            System.out.println("[DEBUG] Message sent successfully");
         }
     }
 
     /**
-     * 查询数据，通过 boolean 参数控制是否启用缓存
+     * Queries data, with cache usage controlled by a boolean parameter.
      *
-     * @param key       查询键
-     * @param useCache  是否使用缓存
-     * @return          查询结果
+     * @param key      the lookup key
+     * @param useCache whether to use the cache
+     * @return         the query result
      */
     public String query(String key, boolean useCache) {
         if (useCache) {
-            System.out.println("[缓存] 从缓存中获取: " + key);
+            System.out.println("[Cache] Fetching from cache: " + key);
             return "cached_" + key;
         }
-        System.out.println("[数据库] 从数据库查询: " + key);
+        System.out.println("[Database] Querying from database: " + key);
         return "db_" + key;
     }
 
     // -----------------------------------------------------------------------
-    // main：演示所有用法
+    // main: demonstrates all patterns
     // -----------------------------------------------------------------------
     public static void main(String[] args) {
         BooleanFlagSwitch demo = new BooleanFlagSwitch();
 
-        System.out.println("=== 1. 简单 boolean 标志 ===");
-        demo.doWork();           // 关闭状态
+        System.out.println("=== 1. Simple boolean flag ===");
+        demo.doWork();           // switch is off
         demo.enable();
-        demo.doWork();           // 开启状态
+        demo.doWork();           // switch is on
         demo.toggle();
-        demo.doWork();           // 切换后（关闭）
+        demo.doWork();           // toggled (now off)
 
-        System.out.println("\n=== 2. AtomicBoolean 线程安全开关 ===");
-        System.out.println("初始状态: " + demo.isAtomicEnabled());
+        System.out.println("\n=== 2. AtomicBoolean thread-safe switch ===");
+        System.out.println("Initial state: " + demo.isAtomicEnabled());
         boolean old = demo.atomicEnable();
-        System.out.println("atomicEnable() 前的旧值: " + old + "，当前值: " + demo.isAtomicEnabled());
+        System.out.println("Previous value before atomicEnable(): " + old + ", current value: " + demo.isAtomicEnabled());
         boolean swapped = demo.atomicCompareAndSet(true, false);
-        System.out.println("CAS(true->false) 成功: " + swapped + "，当前值: " + demo.isAtomicEnabled());
+        System.out.println("CAS(true->false) succeeded: " + swapped + ", current value: " + demo.isAtomicEnabled());
 
-        System.out.println("\n=== 3. 函数参数布尔开关 ===");
-        demo.sendMessage("Hello, World!", true);   // 开启调试日志
+        System.out.println("\n=== 3. Boolean method-parameter switch ===");
+        demo.sendMessage("Hello, World!", true);   // debug logging on
         System.out.println();
-        demo.sendMessage("Hello, World!", false);  // 关闭调试日志
+        demo.sendMessage("Hello, World!", false);  // debug logging off
         System.out.println();
-        System.out.println("useCache=true  结果: " + demo.query("user:1", true));
-        System.out.println("useCache=false 结果: " + demo.query("user:1", false));
+        System.out.println("useCache=true  result: " + demo.query("user:1", true));
+        System.out.println("useCache=false result: " + demo.query("user:1", false));
     }
 }
