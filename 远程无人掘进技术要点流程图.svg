@@ -1,0 +1,298 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1680" font-family="Microsoft YaHei, SimHei, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#444"/>
+    </marker>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#1565c0"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#2e7d32"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e65100"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#b71c1c"/>
+    </marker>
+  </defs>
+
+  <!-- ═══════════════ Background ═══════════════ -->
+  <rect width="1200" height="1680" rx="16" fill="#f8f9fa" stroke="#ccc" stroke-width="1"/>
+
+  <!-- ═══════════════ Title ═══════════════ -->
+  <rect x="20" y="14" width="1160" height="72" rx="10" fill="#0d47a1"/>
+  <text x="600" y="46" text-anchor="middle" font-size="22" font-weight="bold" fill="white">远程无人化掘进作业系统 — 技术要点流程图</text>
+  <text x="600" y="72" text-anchor="middle" font-size="13" fill="#90caf9">Remote Unmanned Tunneling System · Key Technical Points Flowchart</text>
+
+  <!-- ═══════════════ SECTION A: OPERATOR LAYER ═══════════════ -->
+  <rect x="20" y="102" width="1160" height="198" rx="10" fill="#e3f2fd" stroke="#1565c0" stroke-width="2.5"/>
+  <text x="36" y="124" font-size="14" font-weight="bold" fill="#0d47a1">【A】操作层 — Operator Layer</text>
+
+  <!-- Ground Control Center -->
+  <rect x="60" y="134" width="480" height="148" rx="8" fill="#bbdefb" stroke="#1976d2" stroke-width="2"/>
+  <text x="300" y="158" text-anchor="middle" font-size="14" font-weight="bold" fill="#0d47a1">地面集控中心 Ground Control Center</text>
+  <!-- Operator box -->
+  <rect x="80" y="168" width="190" height="92" rx="6" fill="white" stroke="#42a5f5" stroke-width="1.5"/>
+  <text x="175" y="187" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">操作员工作站</text>
+  <text x="175" y="205" text-anchor="middle" font-size="11" fill="#555">远程操控台（主/备双套）</text>
+  <text x="175" y="221" text-anchor="middle" font-size="11" fill="#555">手柄 + 踏板 + 显示阵列</text>
+  <text x="175" y="240" text-anchor="middle" font-size="10" fill="#777">双因子身份认证 · 四级权限管控</text>
+  <!-- Digital Twin box -->
+  <rect x="290" y="168" width="230" height="92" rx="6" fill="white" stroke="#42a5f5" stroke-width="1.5"/>
+  <text x="405" y="187" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">数字孪生 &amp; AI 决策辅助</text>
+  <text x="405" y="205" text-anchor="middle" font-size="11" fill="#555">实时三维重建（视觉SLAM）</text>
+  <text x="405" y="221" text-anchor="middle" font-size="11" fill="#555">掘进机姿态 / 断面轮廓实时渲染</text>
+  <text x="405" y="240" text-anchor="middle" font-size="10" fill="#777">AI参数优化建议 · 状态可视化大屏</text>
+
+  <!-- Underground Safety Chamber -->
+  <rect x="660" y="134" width="480" height="148" rx="8" fill="#c8e6c9" stroke="#388e3c" stroke-width="2"/>
+  <text x="900" y="158" text-anchor="middle" font-size="14" font-weight="bold" fill="#1b5e20">井下安全硐室 Underground Safety Chamber</text>
+  <rect x="680" y="168" width="210" height="92" rx="6" fill="white" stroke="#66bb6a" stroke-width="1.5"/>
+  <text x="785" y="187" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">备用远控台</text>
+  <text x="785" y="205" text-anchor="middle" font-size="11" fill="#555">主控中断时自动切换</text>
+  <text x="785" y="221" text-anchor="middle" font-size="11" fill="#555">有线 + 5G 双链路冗余</text>
+  <text x="785" y="240" text-anchor="middle" font-size="10" fill="#777">故障切换时间 &lt;50ms</text>
+  <rect x="910" y="168" width="210" height="92" rx="6" fill="white" stroke="#66bb6a" stroke-width="1.5"/>
+  <text x="1015" y="187" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">现场监护人员</text>
+  <text x="1015" y="205" text-anchor="middle" font-size="11" fill="#555">设备状态巡检（≤2人）</text>
+  <text x="1015" y="221" text-anchor="middle" font-size="11" fill="#555">紧急停机权 / 安全确认</text>
+  <text x="1015" y="240" text-anchor="middle" font-size="10" fill="#777">实现"迎头无人、少人值守"</text>
+
+  <!-- Arrow A→B -->
+  <line x1="600" y1="300" x2="600" y2="330" stroke="#444" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="610" y="318" font-size="11" fill="#555">操作指令下发</text>
+
+  <!-- ═══════════════ SECTION B: TRANSMISSION ═══════════════ -->
+  <rect x="20" y="336" width="1160" height="148" rx="10" fill="#fff3e0" stroke="#e65100" stroke-width="2.5"/>
+  <text x="36" y="358" font-size="14" font-weight="bold" fill="#bf360c">【B】5G 低时延传输层 — 5G uRLLC Transmission Layer</text>
+
+  <!-- Control slice -->
+  <rect x="50" y="368" width="320" height="98" rx="7" fill="#ffe0b2" stroke="#fb8c00" stroke-width="1.8"/>
+  <text x="210" y="389" text-anchor="middle" font-size="13" font-weight="bold" fill="#e65100">控制指令切片 (uRLLC)</text>
+  <text x="210" y="407" text-anchor="middle" font-size="11" fill="#444">优先级：最高　带宽预留：10Mbps</text>
+  <text x="210" y="423" text-anchor="middle" font-size="11" fill="#444">端到端延迟：≤10ms　丢包率：≤10⁻⁵</text>
+  <text x="210" y="439" text-anchor="middle" font-size="11" fill="#444">加密：AES-256-GCM + TLS 1.3</text>
+  <text x="210" y="456" text-anchor="middle" font-size="10" fill="#777">操控台 ↔ 执行控制器　有线冗余备份</text>
+
+  <!-- Video slice -->
+  <rect x="440" y="368" width="320" height="98" rx="7" fill="#ffe0b2" stroke="#fb8c00" stroke-width="1.8"/>
+  <text x="600" y="389" text-anchor="middle" font-size="13" font-weight="bold" fill="#e65100">视频监控切片 (eMBB)</text>
+  <text x="600" y="407" text-anchor="middle" font-size="11" fill="#444">带宽预留：50Mbps　H.265/HEVC编码</text>
+  <text x="600" y="423" text-anchor="middle" font-size="11" fill="#444">分辨率：1080P @ 30fps</text>
+  <text x="600" y="439" text-anchor="middle" font-size="11" fill="#444">视频端到端延迟：≤150ms</text>
+  <text x="600" y="456" text-anchor="middle" font-size="10" fill="#777">全景摄像仪 + 局部摄像仪 → 操控台</text>
+
+  <!-- Sensor slice -->
+  <rect x="830" y="368" width="320" height="98" rx="7" fill="#ffe0b2" stroke="#fb8c00" stroke-width="1.8"/>
+  <text x="990" y="389" text-anchor="middle" font-size="13" font-weight="bold" fill="#e65100">传感器数据切片 (mMTC)</text>
+  <text x="990" y="407" text-anchor="middle" font-size="11" fill="#444">带宽预留：20Mbps　延迟：≤100ms</text>
+  <text x="990" y="423" text-anchor="middle" font-size="11" fill="#444">惯导 / 激光 / SLAM 点云数据</text>
+  <text x="990" y="439" text-anchor="middle" font-size="11" fill="#444">连接密度：≥100设备/基站</text>
+  <text x="990" y="456" text-anchor="middle" font-size="10" fill="#777">OPC UA + MQTT 协议　边缘预处理</text>
+
+  <!-- Arrow B→C -->
+  <line x1="600" y1="484" x2="600" y2="514" stroke="#444" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="610" y="502" font-size="11" fill="#555">指令到达井下执行层</text>
+
+  <!-- ═══════════════ SECTION C: SENSING ═══════════════ -->
+  <rect x="20" y="520" width="1160" height="212" rx="10" fill="#fce4ec" stroke="#c62828" stroke-width="2.5"/>
+  <text x="36" y="542" font-size="14" font-weight="bold" fill="#b71c1c">【C】井下感知定位层 — Underground Sensing &amp; Positioning Layer</text>
+
+  <!-- Inertial Nav -->
+  <rect x="50" y="552" width="256" height="160" rx="7" fill="white" stroke="#ef9a9a" stroke-width="2"/>
+  <rect x="50" y="552" width="256" height="32" rx="7" fill="#c62828"/>
+  <text x="178" y="573" text-anchor="middle" font-size="13" font-weight="bold" fill="white">① 防爆惯导系统</text>
+  <text x="178" y="573" text-anchor="middle" font-size="9" fill="white" dy="14">FOG-INS · Explosion-proof Inertial Nav</text>
+  <text x="70" y="607" font-size="11" fill="#333">原理：光纤陀螺仪 + 加速度计</text>
+  <text x="70" y="625" font-size="11" fill="#333">精度：≤5mm / 100m</text>
+  <text x="70" y="643" font-size="11" fill="#333">输出：三维位置 / 姿态 / 航向</text>
+  <text x="70" y="661" font-size="11" fill="#333">频率：100Hz　协议：Modbus RTU</text>
+  <text x="70" y="679" font-size="11" fill="#555">作用：实时姿态感知 · 累积位移计算</text>
+  <text x="70" y="697" font-size="10" fill="#b71c1c">⚠ 长距漂移 → 需激光修正</text>
+
+  <!-- Laser Positioning -->
+  <rect x="330" y="552" width="256" height="160" rx="7" fill="white" stroke="#ef9a9a" stroke-width="2"/>
+  <rect x="330" y="552" width="256" height="32" rx="7" fill="#c62828"/>
+  <text x="458" y="573" text-anchor="middle" font-size="13" font-weight="bold" fill="white">② 激光定位系统</text>
+  <text x="458" y="573" text-anchor="middle" font-size="9" fill="white" dy="14">Laser Positioning · Absolute Reference</text>
+  <text x="350" y="607" font-size="11" fill="#333">方案：激光基站 + 反射靶标</text>
+  <text x="350" y="625" font-size="11" fill="#333">精度：±2mm　范围：0~200m</text>
+  <text x="350" y="643" font-size="11" fill="#333">频率：10Hz　协议：TCP/IP</text>
+  <text x="350" y="661" font-size="11" fill="#333">数据格式：JSON / XML</text>
+  <text x="350" y="679" font-size="11" fill="#555">作用：修正惯导累积误差</text>
+  <text x="350" y="697" font-size="10" fill="#1b5e20">✔ 提供绝对位置基准</text>
+
+  <!-- Visual SLAM -->
+  <rect x="610" y="552" width="256" height="160" rx="7" fill="white" stroke="#ef9a9a" stroke-width="2"/>
+  <rect x="610" y="552" width="256" height="32" rx="7" fill="#c62828"/>
+  <text x="738" y="573" text-anchor="middle" font-size="13" font-weight="bold" fill="white">③ 视觉 SLAM</text>
+  <text x="738" y="573" text-anchor="middle" font-size="9" fill="white" dy="14">Visual SLAM · 3D Mapping</text>
+  <text x="630" y="607" font-size="11" fill="#333">算法：ORB-SLAM3 / LSD-SLAM</text>
+  <text x="630" y="625" font-size="11" fill="#333">传感器：双目 / RGB-D 摄像头</text>
+  <text x="630" y="643" font-size="11" fill="#333">点云：10,000~50,000 点/帧</text>
+  <text x="630" y="661" font-size="11" fill="#333">平台：NVIDIA Jetson AGX Xavier</text>
+  <text x="630" y="679" font-size="11" fill="#555">作用：迎头三维重建 · 障碍物检测</text>
+  <text x="630" y="697" font-size="10" fill="#1b5e20">✔ 断面轮廓实时建图</text>
+
+  <!-- 3D LiDAR -->
+  <rect x="890" y="552" width="256" height="160" rx="7" fill="white" stroke="#ef9a9a" stroke-width="2"/>
+  <rect x="890" y="552" width="256" height="32" rx="7" fill="#c62828"/>
+  <text x="1018" y="573" text-anchor="middle" font-size="13" font-weight="bold" fill="white">④ 三维激光扫描雷达</text>
+  <text x="1018" y="573" text-anchor="middle" font-size="9" fill="white" dy="14">3D LiDAR · Section Detection</text>
+  <text x="910" y="607" font-size="11" fill="#333">功能：断面成型检测</text>
+  <text x="910" y="625" font-size="11" fill="#333">精度：亚毫米级轮廓扫描</text>
+  <text x="910" y="643" font-size="11" fill="#333">覆盖：360° 全断面扫描</text>
+  <text x="910" y="661" font-size="11" fill="#333">输出：点云 + 断面偏差矢量</text>
+  <text x="910" y="679" font-size="11" fill="#555">作用：障碍物识别与防撞</text>
+  <text x="910" y="697" font-size="10" fill="#1b5e20">✔ 实时断面合规性验证</text>
+
+  <!-- Data fusion arrow -->
+  <line x1="178" y1="712" x2="178" y2="732" stroke="#b71c1c" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="458" y1="712" x2="458" y2="732" stroke="#b71c1c" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="738" y1="712" x2="738" y2="732" stroke="#b71c1c" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="1018" y1="712" x2="1018" y2="732" stroke="#b71c1c" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Arrow C→D -->
+  <line x1="600" y1="732" x2="600" y2="762" stroke="#444" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="612" y="750" font-size="11" fill="#555">多源融合 → 决策执行</text>
+
+  <!-- ═══════════════ SECTION D: CORE FUNCTIONS ═══════════════ -->
+  <rect x="20" y="768" width="1160" height="212" rx="10" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2.5"/>
+  <text x="36" y="790" font-size="14" font-weight="bold" fill="#1b5e20">【D】四大核心功能 — Four Core Automated Functions</text>
+
+  <!-- Auto Cutting -->
+  <rect x="50" y="800" width="256" height="160" rx="7" fill="white" stroke="#81c784" stroke-width="2"/>
+  <rect x="50" y="800" width="256" height="32" rx="7" fill="#2e7d32"/>
+  <text x="178" y="821" text-anchor="middle" font-size="13" font-weight="bold" fill="white">① 全自动截割</text>
+  <text x="178" y="821" text-anchor="middle" font-size="9" fill="white" dy="14">Fully Automatic Cutting</text>
+  <text x="70" y="855" font-size="11" fill="#333">输入：断面设计参数 + 煤岩识别</text>
+  <text x="70" y="873" font-size="11" fill="#333">算法：截割路径规划 + 力控反馈</text>
+  <text x="70" y="891" font-size="11" fill="#333">闭环：截深 / 截速 / 截割力实时调节</text>
+  <text x="70" y="909" font-size="11" fill="#333">AI：ResNet 煤岩识别 → 参数自适应</text>
+  <text x="70" y="928" font-size="10" fill="#2e7d32">✔ 消除疲劳操作 · 参数最优化</text>
+
+  <!-- Auto Navigation -->
+  <rect x="330" y="800" width="256" height="160" rx="7" fill="white" stroke="#81c784" stroke-width="2"/>
+  <rect x="330" y="800" width="256" height="32" rx="7" fill="#2e7d32"/>
+  <text x="458" y="821" text-anchor="middle" font-size="13" font-weight="bold" fill="white">② 自主导航</text>
+  <text x="458" y="821" text-anchor="middle" font-size="9" fill="white" dy="14">Autonomous Navigation</text>
+  <text x="350" y="855" font-size="11" fill="#333">输入：惯导 + 激光 + SLAM 融合位姿</text>
+  <text x="350" y="873" font-size="11" fill="#333">算法：卡尔曼滤波多源融合</text>
+  <text x="350" y="891" font-size="11" fill="#333">规划：A* / D* 动态路径规划</text>
+  <text x="350" y="909" font-size="11" fill="#333">障碍：LiDAR 实时避障 ≤200ms</text>
+  <text x="350" y="928" font-size="10" fill="#2e7d32">✔ 无需人工介入的全程导航</text>
+
+  <!-- Deviation Correction -->
+  <rect x="610" y="800" width="256" height="160" rx="7" fill="white" stroke="#81c784" stroke-width="2"/>
+  <rect x="610" y="800" width="256" height="32" rx="7" fill="#2e7d32"/>
+  <text x="738" y="821" text-anchor="middle" font-size="13" font-weight="bold" fill="white">③ 巷道自动纠偏</text>
+  <text x="738" y="821" text-anchor="middle" font-size="9" fill="white" dy="14">Automatic Roadway Deviation Correction</text>
+  <text x="630" y="855" font-size="11" fill="#333">输入：激光绝对位置 + 设计轴线</text>
+  <text x="630" y="873" font-size="11" fill="#333">检测：水平偏差 + 倾角偏差</text>
+  <text x="630" y="891" font-size="11" fill="#333">阈值：偏差 &gt;5mm 触发纠偏</text>
+  <text x="630" y="909" font-size="11" fill="#333">执行：推进油缸差压调节</text>
+  <text x="630" y="928" font-size="10" fill="#2e7d32">✔ 保障巷道成型精度</text>
+
+  <!-- Precision Cross-section -->
+  <rect x="890" y="800" width="256" height="160" rx="7" fill="white" stroke="#81c784" stroke-width="2"/>
+  <rect x="890" y="800" width="256" height="32" rx="7" fill="#2e7d32"/>
+  <text x="1018" y="821" text-anchor="middle" font-size="13" font-weight="bold" fill="white">④ 断面精准成型</text>
+  <text x="1018" y="821" text-anchor="middle" font-size="9" fill="white" dy="14">Precision Cross-Section Forming</text>
+  <text x="910" y="855" font-size="11" fill="#333">输入：3D LiDAR 点云 + 设计断面</text>
+  <text x="910" y="873" font-size="11" fill="#333">比对：实测 vs 设计断面偏差</text>
+  <text x="910" y="891" font-size="11" fill="#333">控制：截割臂运动补偿</text>
+  <text x="910" y="909" font-size="11" fill="#333">验收：断面合规率实时输出</text>
+  <text x="910" y="928" font-size="10" fill="#2e7d32">✔ 过 / 欠挖量精确控制</text>
+
+  <!-- Arrow D→E -->
+  <line x1="600" y1="980" x2="600" y2="1010" stroke="#444" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="612" y="998" font-size="11" fill="#555">执行结果 → 反馈回路</text>
+
+  <!-- ═══════════════ SECTION E: EXECUTION & SAFETY ═══════════════ -->
+  <rect x="20" y="1016" width="1160" height="176" rx="10" fill="#f3e5f5" stroke="#6a1b9a" stroke-width="2.5"/>
+  <text x="36" y="1038" font-size="14" font-weight="bold" fill="#4a148c">【E】执行控制 &amp; 安全联锁层 — Execution Control &amp; Safety Interlock Layer</text>
+
+  <!-- Remote Exec Controller -->
+  <rect x="50" y="1048" width="360" height="124" rx="7" fill="white" stroke="#ce93d8" stroke-width="2"/>
+  <rect x="50" y="1048" width="360" height="28" rx="7" fill="#6a1b9a"/>
+  <text x="230" y="1068" text-anchor="middle" font-size="13" font-weight="bold" fill="white">矿用隔爆型远控执行控制器</text>
+  <text x="70" y="1096" font-size="11" fill="#333">接收地面/安全硐室远程操控指令</text>
+  <text x="70" y="1114" font-size="11" fill="#333">驱动截割电机 / 推进油缸 / 支护系统</text>
+  <text x="70" y="1132" font-size="11" fill="#333">PLC 三重验证（硬接线 + 软件 + 看门狗）</text>
+  <text x="70" y="1150" font-size="10" fill="#4a148c">响应时间：≤50ms　故障安全失效：停机</text>
+  <text x="70" y="1164" font-size="10" fill="#777">通信协议：PROFINET / EtherCAT</text>
+
+  <!-- Safety Interlock -->
+  <rect x="440" y="1048" width="360" height="124" rx="7" fill="white" stroke="#ce93d8" stroke-width="2"/>
+  <rect x="440" y="1048" width="360" height="28" rx="7" fill="#6a1b9a"/>
+  <text x="620" y="1068" text-anchor="middle" font-size="13" font-weight="bold" fill="white">多级安全联锁机制</text>
+  <text x="460" y="1096" font-size="11" fill="#333">UWB 人员入险区 → 硬联锁停机闭锁</text>
+  <text x="460" y="1114" font-size="11" fill="#333">瓦斯超限 / 顶板压力异常 → 自动停机</text>
+  <text x="460" y="1132" font-size="11" fill="#333">视频遮挡 / 通信中断 → 原地保持 / 停机</text>
+  <text x="460" y="1150" font-size="10" fill="#c62828">联锁触发时间：≤100ms（硬接线）</text>
+  <text x="460" y="1164" font-size="10" fill="#777">符合 IEC 61508 功能安全 SIL2 标准</text>
+
+  <!-- Feedback Video -->
+  <rect x="830" y="1048" width="320" height="124" rx="7" fill="white" stroke="#ce93d8" stroke-width="2"/>
+  <rect x="830" y="1048" width="320" height="28" rx="7" fill="#6a1b9a"/>
+  <text x="990" y="1068" text-anchor="middle" font-size="13" font-weight="bold" fill="white">实时视频反馈</text>
+  <text x="850" y="1096" font-size="11" fill="#333">全景摄像仪：迎头 360° 覆盖</text>
+  <text x="850" y="1114" font-size="11" fill="#333">局部摄像仪：关键部件特写</text>
+  <text x="850" y="1132" font-size="11" fill="#333">AI 叠加：人员 / 煤岩 / 姿态标注</text>
+  <text x="850" y="1150" font-size="10" fill="#4a148c">延迟：≤150ms　分辨率：1080P @ 30fps</text>
+  <text x="850" y="1164" font-size="10" fill="#777">录像留存 ≥30天（区块链存证）</text>
+
+  <!-- Feedback arrows E→B (return path) -->
+  <path d="M 80 1048 L 80 1030 L 1130 1030 L 1130 484" fill="none" stroke="#1565c0" stroke-width="2" stroke-dasharray="8,4" marker-end="url(#arr-blue)"/>
+  <text x="1050" y="760" font-size="11" fill="#1565c0" transform="rotate(-90 1050 760)">传感器数据 / 视频反馈 → 操控台</text>
+
+  <!-- Arrow E→F -->
+  <line x1="600" y1="1192" x2="600" y2="1222" stroke="#444" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="612" y="1210" font-size="11" fill="#555">持续掘进 / 安全结果</text>
+
+  <!-- ═══════════════ SECTION F: SAFETY OUTCOME ═══════════════ -->
+  <rect x="20" y="1228" width="1160" height="136" rx="10" fill="#e8eaf6" stroke="#283593" stroke-width="2.5"/>
+  <text x="36" y="1250" font-size="14" font-weight="bold" fill="#1a237e">【F】安全成果 — Safety Outcome</text>
+
+  <rect x="50" y="1260" width="240" height="84" rx="8" fill="#c5cae9" stroke="#3949ab" stroke-width="2"/>
+  <text x="170" y="1283" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a237e">🚫 迎头无人</text>
+  <text x="170" y="1305" text-anchor="middle" font-size="11" fill="#333">掘进司机 / 支护工</text>
+  <text x="170" y="1321" text-anchor="middle" font-size="11" fill="#333">完全撤出高危区域</text>
+  <text x="170" y="1337" text-anchor="middle" font-size="10" fill="#1a237e">消除直面灾害的风险</text>
+
+  <rect x="330" y="1260" width="240" height="84" rx="8" fill="#c5cae9" stroke="#3949ab" stroke-width="2"/>
+  <text x="450" y="1283" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a237e">⚙️ 操作标准化</text>
+  <text x="450" y="1305" text-anchor="middle" font-size="11" fill="#333">锁定最优工况参数</text>
+  <text x="450" y="1321" text-anchor="middle" font-size="11" fill="#333">固化标准作业流程</text>
+  <text x="450" y="1337" text-anchor="middle" font-size="10" fill="#1a237e">消除人为操作失误</text>
+
+  <rect x="610" y="1260" width="240" height="84" rx="8" fill="#c5cae9" stroke="#3949ab" stroke-width="2"/>
+  <text x="730" y="1283" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a237e">👁️ 少人值守</text>
+  <text x="730" y="1305" text-anchor="middle" font-size="11" fill="#333">≤2 人现场巡检</text>
+  <text x="730" y="1321" text-anchor="middle" font-size="11" fill="#333">驻守在安全硐室</text>
+  <text x="730" y="1337" text-anchor="middle" font-size="10" fill="#1a237e">大幅降低人员暴露风险</text>
+
+  <rect x="890" y="1260" width="270" height="84" rx="8" fill="#c5cae9" stroke="#3949ab" stroke-width="2"/>
+  <text x="1025" y="1283" text-anchor="middle" font-size="16" font-weight="bold" fill="#1a237e">🚨 应急全联动</text>
+  <text x="1025" y="1305" text-anchor="middle" font-size="11" fill="#333">灾害预警 → 自动停机</text>
+  <text x="1025" y="1321" text-anchor="middle" font-size="11" fill="#333">UWB 定位 → 逃生引导</text>
+  <text x="1025" y="1337" text-anchor="middle" font-size="10" fill="#1a237e">全流程智能化应急避险</text>
+
+  <!-- ═══════════════ LEGEND ═══════════════ -->
+  <rect x="20" y="1384" width="1160" height="80" rx="8" fill="#fff9c4" stroke="#f57f17" stroke-width="1.5"/>
+  <text x="36" y="1406" font-size="13" font-weight="bold" fill="#e65100">图例 Legend</text>
+  <line x1="100" y1="1426" x2="160" y2="1426" stroke="#444" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="168" y="1430" font-size="11" fill="#333">有线控制流（主路径）</text>
+  <line x1="340" y1="1426" x2="400" y2="1426" stroke="#1565c0" stroke-width="2" stroke-dasharray="7,4" marker-end="url(#arr-blue)"/>
+  <text x="408" y="1430" font-size="11" fill="#333">无线反馈流（5G/传感器数据）</text>
+  <line x1="610" y1="1426" x2="670" y2="1426" stroke="#b71c1c" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="678" y="1430" font-size="11" fill="#333">多源融合（惯导+激光+SLAM）</text>
+  <line x1="870" y1="1426" x2="930" y2="1426" stroke="#2e7d32" stroke-width="2" marker-end="url(#arr-green)"/>
+  <text x="938" y="1430" font-size="11" fill="#333">自动化执行指令流</text>
+  <text x="36" y="1454" font-size="11" fill="#555">技术基础：防爆惯导 + 激光定位 + 视觉SLAM + 5G低时延传输　|　核心功能：全自动截割 · 自主导航 · 巷道自动纠偏 · 断面精准成型</text>
+  <text x="36" y="1469" font-size="10" fill="#777">安全目标：掘进司机、支护工从迎头高危区域撤出 → "迎头无人、少人值守"，从根源上消除人员直面灾害的风险</text>
+
+  <!-- ═══════════════ Footer ═══════════════ -->
+  <text x="600" y="1650" text-anchor="middle" font-size="11" fill="#999">矿井掘进远程无人化操控系统 · 技术要点流程图 v1.0 · 参照：IEC 61508 / AQ 1051-2008 / IEC 62443</text>
+</svg>
