@@ -1,0 +1,342 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 2000">
+  <defs>
+    <style>
+      .title { font: bold 28px sans-serif; fill: #1a1a1a; }
+      .subtitle { font: bold 20px sans-serif; fill: #2c5aa0; }
+      .text { font: 14px sans-serif; fill: #333; }
+      .small-text { font: 12px sans-serif; fill: #555; }
+      .box { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2; }
+      .box-danger { fill: #ffebee; stroke: #c62828; stroke-width: 2; }
+      .box-success { fill: #e8f5e9; stroke: #388e3c; stroke-width: 2; }
+      .box-warning { fill: #fff3e0; stroke: #f57c00; stroke-width: 2; }
+      .box-purple { fill: #f3e5f5; stroke: #7b1fa2; stroke-width: 2; }
+      .arrow { fill: none; stroke: #666; stroke-width: 2; marker-end: url(#arrowhead); }
+      .arrow-wireless { fill: none; stroke: #ff6b6b; stroke-width: 2; stroke-dasharray: 5,5; marker-end: url(#arrowhead-wireless); }
+      .arrow-secure { fill: none; stroke: #00c853; stroke-width: 3; marker-end: url(#arrowhead-secure); }
+      .key-box { fill: #fff9c4; stroke: #f57f17; stroke-width: 2; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#666" />
+    </marker>
+    <marker id="arrowhead-wireless" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#ff6b6b" />
+    </marker>
+    <marker id="arrowhead-secure" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#00c853" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="800" y="40" class="title" text-anchor="middle">矿井掘进远程操控系统 - 核心技术与传输协议流程图</text>
+  <text x="800" y="70" class="subtitle" text-anchor="middle">Remote Control System Architecture &amp; Security Ecosystem</text>
+
+  <!-- Legend -->
+  <rect x="1200" y="90" width="350" height="140" class="key-box" rx="5"/>
+  <text x="1375" y="115" class="subtitle" text-anchor="middle">图例 Legend</text>
+  <line x1="1220" y1="130" x2="1280" y2="130" class="arrow"/>
+  <text x="1290" y="135" class="small-text">有线传输 Wired</text>
+  <line x1="1220" y1="155" x2="1280" y2="155" class="arrow-wireless"/>
+  <text x="1290" y="160" class="small-text">无线传输 Wireless</text>
+  <line x1="1220" y1="180" x2="1280" y2="180" class="arrow-secure"/>
+  <text x="1290" y="185" class="small-text">加密安全链路 Encrypted</text>
+  <rect x="1220" y="195" width="50" height="25" class="box"/>
+  <text x="1280" y="212" class="small-text">数据采集层</text>
+  <rect x="1360" y="195" width="50" height="25" class="box-success"/>
+  <text x="1420" y="212" class="small-text">控制层</text>
+
+  <!-- Layer 1: Underground Sensing & Control Devices -->
+  <rect x="50" y="250" width="1500" height="300" fill="#f5f5f5" stroke="#333" stroke-width: 3; rx="10"/>
+  <text x="800" y="280" class="subtitle" text-anchor="middle">【井下层 - Underground Sensing &amp; Control Layer】</text>
+
+  <!-- Sensing Devices -->
+  <g id="sensing-layer">
+    <!-- Position Sensing -->
+    <rect x="80" y="310" width="200" height="220" class="box" rx="5"/>
+    <text x="180" y="335" class="subtitle" text-anchor="middle">定位感知</text>
+    <text x="90" y="360" class="small-text">• 光纤惯导系统</text>
+    <text x="90" y="380" class="small-text">  精度≤5mm/100m</text>
+    <text x="90" y="400" class="small-text">• 激光定位仪</text>
+    <text x="90" y="420" class="small-text">• 激光扫描雷达</text>
+    <text x="90" y="440" class="small-text">• 视觉SLAM相机</text>
+    <text x="90" y="470" class="text" font-weight="bold">传输协议:</text>
+    <text x="90" y="490" class="small-text">TCP/IP, Modbus</text>
+    <text x="90" y="510" class="small-text">EtherCAT实时总线</text>
+
+    <!-- Video Monitoring -->
+    <rect x="310" y="310" width="200" height="220" class="box" rx="5"/>
+    <text x="410" y="335" class="subtitle" text-anchor="middle">视频监控</text>
+    <text x="320" y="360" class="small-text">• 全景摄像仪×4</text>
+    <text x="320" y="380" class="small-text">• 局部特写摄像仪</text>
+    <text x="320" y="400" class="small-text">• 红外热成像仪</text>
+    <text x="320" y="420" class="small-text">• AI行为识别摄像</text>
+    <text x="320" y="450" class="text" font-weight="bold">视频编码:</text>
+    <text x="320" y="470" class="small-text">H.265/HEVC</text>
+    <text x="320" y="490" class="small-text">分辨率: 1080P</text>
+    <text x="320" y="510" class="small-text">延迟≤150ms</text>
+
+    <!-- Equipment Control -->
+    <rect x="540" y="310" width="200" height="220" class="box-success" rx="5"/>
+    <text x="640" y="335" class="subtitle" text-anchor="middle">设备控制</text>
+    <text x="550" y="360" class="small-text">• 远控执行控制器</text>
+    <text x="550" y="380" class="small-text">• 截割系统控制</text>
+    <text x="550" y="400" class="small-text">• 行走机构控制</text>
+    <text x="550" y="420" class="small-text">• 液压系统控制</text>
+    <text x="550" y="440" class="small-text">• 智能喷雾控制</text>
+    <text x="550" y="470" class="text" font-weight="bold">控制协议:</text>
+    <text x="550" y="490" class="small-text">OPC UA</text>
+    <text x="550" y="510" class="small-text">PROFINET实时</text>
+
+    <!-- Safety Sensors -->
+    <rect x="770" y="310" width="220" height="220" class="box-danger" rx="5"/>
+    <text x="880" y="335" class="subtitle" text-anchor="middle">安全传感器</text>
+    <text x="780" y="360" class="small-text">• 瓦斯传感器(≥1%闭锁)</text>
+    <text x="780" y="380" class="small-text">• 顶板离层监测</text>
+    <text x="780" y="400" class="small-text">• 粉尘浓度传感器</text>
+    <text x="780" y="420" class="small-text">• 温湿度/有害气体</text>
+    <text x="780" y="440" class="small-text">• 微震监测传感器</text>
+    <text x="780" y="470" class="text" font-weight="bold">数据协议:</text>
+    <text x="780" y="490" class="small-text">MQTT/CoAP</text>
+    <text x="780" y="510" class="small-text">JSON数据格式</text>
+
+    <!-- Personnel Tracking -->
+    <rect x="1020" y="310" width="200" height="220" class="box-warning" rx="5"/>
+    <text x="1120" y="335" class="subtitle" text-anchor="middle">人员定位</text>
+    <text x="1030" y="360" class="small-text">• UWB定位基站</text>
+    <text x="1030" y="380" class="small-text">  精度≤10cm</text>
+    <text x="1030" y="400" class="small-text">• 人员定位标识卡</text>
+    <text x="1030" y="420" class="small-text">• 电子围栏系统</text>
+    <text x="1030" y="440" class="small-text">• 应急广播终端</text>
+    <text x="1030" y="470" class="text" font-weight="bold">定位协议:</text>
+    <text x="1030" y="490" class="small-text">UWB-TDOA</text>
+    <text x="1030" y="510" class="small-text">IEEE 802.15.4</text>
+
+    <!-- Equipment Health -->
+    <rect x="1250" y="310" width="220" height="220" class="box-purple" rx="5"/>
+    <text x="1360" y="335" class="subtitle" text-anchor="middle">设备健康</text>
+    <text x="1260" y="360" class="small-text">• 振动加速度传感器</text>
+    <text x="1260" y="380" class="small-text">• 温度传感器</text>
+    <text x="1260" y="400" class="small-text">• 油液监测传感器</text>
+    <text x="1260" y="420" class="small-text">• 压力/流量传感器</text>
+    <text x="1260" y="440" class="small-text">• 电流/电压传感器</text>
+    <text x="1260" y="470" class="text" font-weight="bold">数据协议:</text>
+    <text x="1260" y="490" class="small-text">Modbus RTU/TCP</text>
+    <text x="1260" y="510" class="small-text">OPC DA/UA</text>
+  </g>
+
+  <!-- Arrows from sensing layer to network layer -->
+  <path d="M 180 530 L 180 600" class="arrow"/>
+  <path d="M 410 530 L 410 600" class="arrow"/>
+  <path d="M 640 530 L 640 600" class="arrow-secure"/>
+  <path d="M 880 530 L 880 600" class="arrow"/>
+  <path d="M 1120 530 L 1120 600" class="arrow-wireless"/>
+  <path d="M 1360 530 L 1360 600" class="arrow"/>
+
+  <!-- Layer 2: Network Transmission Layer -->
+  <rect x="50" y="600" width="1500" height="280" fill="#e8eaf6" stroke="#333" stroke-width: 3; rx="10"/>
+  <text x="800" y="630" class="subtitle" text-anchor="middle">【传输层 - Network Transmission Layer】</text>
+
+  <!-- 5G Network -->
+  <rect x="100" y="660" width="280" height="200" class="box-warning" rx="5"/>
+  <text x="240" y="690" class="subtitle" text-anchor="middle">5G专网传输</text>
+  <text x="110" y="720" class="text" font-weight="bold">核心特性:</text>
+  <text x="110" y="740" class="small-text">• 端到端延迟 ≤20ms</text>
+  <text x="110" y="760" class="small-text">• 上行带宽 ≥100Mbps</text>
+  <text x="110" y="780" class="small-text">• 网络切片技术(控制/视频)</text>
+  <text x="110" y="800" class="small-text">• QoS优先级保障</text>
+  <text x="110" y="820" class="text" font-weight="bold">频段: n78(3.5GHz)/n79(4.9GHz)</text>
+  <text x="110" y="840" class="small-text">覆盖: 每300m一组RRU基站</text>
+
+  <!-- Industrial Ethernet -->
+  <rect x="420" y="660" width="280" height="200" class="box" rx="5"/>
+  <text x="560" y="690" class="subtitle" text-anchor="middle">工业环网</text>
+  <text x="430" y="720" class="text" font-weight="bold">拓扑结构:</text>
+  <text x="430" y="740" class="small-text">• 千兆/万兆双冗余环网</text>
+  <text x="430" y="760" class="small-text">• 主备链路自动切换</text>
+  <text x="430" y="780" class="small-text">• 故障恢复时间 &lt;50ms</text>
+  <text x="430" y="800" class="text" font-weight="bold">网络协议:</text>
+  <text x="430" y="820" class="small-text">• IEEE 802.3 Ethernet</text>
+  <text x="430" y="840" class="small-text">• RSTP/ERPS环网保护</text>
+
+  <!-- Edge Computing Gateway -->
+  <rect x="740" y="660" width="280" height="200" class="box-success" rx="5"/>
+  <text x="880" y="690" class="subtitle" text-anchor="middle">边缘计算网关</text>
+  <text x="750" y="720" class="text" font-weight="bold">核心功能:</text>
+  <text x="750" y="740" class="small-text">• 多源数据协议转换</text>
+  <text x="750" y="760" class="small-text">• 边缘侧AI推理(行为识别)</text>
+  <text x="750" y="780" class="small-text">• 本地联锁逻辑执行</text>
+  <text x="750" y="800" class="small-text">• 数据预处理与压缩</text>
+  <text x="750" y="820" class="text" font-weight="bold">平台: ARM/x86 Linux</text>
+  <text x="750" y="840" class="small-text">容器化部署(Docker/K8s)</text>
+
+  <!-- Security Layer -->
+  <rect x="1060" y="660" width="410" height="200" class="box-danger" rx="5"/>
+  <text x="1265" y="690" class="subtitle" text-anchor="middle">安全防护层</text>
+  <text x="1070" y="720" class="text" font-weight="bold">网络安全:</text>
+  <text x="1070" y="740" class="small-text">• 工业防火墙(白名单策略)</text>
+  <text x="1070" y="760" class="small-text">• VLAN隔离(控制/视频/数据)</text>
+  <text x="1070" y="780" class="small-text">• IPSec VPN隧道加密</text>
+  <text x="1070" y="800" class="text" font-weight="bold">数据安全:</text>
+  <text x="1070" y="820" class="small-text">• AES-256控制指令加密</text>
+  <text x="1070" y="840" class="small-text">• TLS 1.3传输层加密</text>
+  <text x="1280" y="740" class="small-text">• 数字签名防篡改</text>
+  <text x="1280" y="760" class="small-text">• PKI证书认证体系</text>
+  <text x="1280" y="780" class="small-text">• 审计日志全留痕</text>
+  <text x="1280" y="800" class="text" font-weight="bold">物理安全:</text>
+  <text x="1280" y="820" class="small-text">• 防爆外壳本安认证</text>
+  <text x="1280" y="840" class="small-text">• 防尘防水IP68级</text>
+
+  <!-- Arrows to control layer -->
+  <path d="M 240 860 L 240 920" class="arrow-wireless"/>
+  <path d="M 560 860 L 560 920" class="arrow"/>
+  <path d="M 880 860 L 880 920" class="arrow-secure"/>
+  <path d="M 1265 860 L 1265 920" class="arrow-secure"/>
+
+  <!-- Layer 3: Ground Control Center -->
+  <rect x="50" y="920" width="1500" height="320" fill="#e0f2f1" stroke="#333" stroke-width: 3; rx="10"/>
+  <text x="800" y="950" class="subtitle" text-anchor="middle">【地面集控中心 - Ground Control Center】</text>
+
+  <!-- Main Control Platform -->
+  <rect x="100" y="980" width="320" height="240" class="box-success" rx="5"/>
+  <text x="260" y="1010" class="subtitle" text-anchor="middle">核心管控平台</text>
+  <text x="110" y="1040" class="text" font-weight="bold">服务器架构:</text>
+  <text x="110" y="1060" class="small-text">• 双机冗余热备(主/备)</text>
+  <text x="110" y="1080" class="small-text">• UPS后备供电≥2h</text>
+  <text x="110" y="1100" class="small-text">• RAID 10数据冗余</text>
+  <text x="110" y="1130" class="text" font-weight="bold">软件模块:</text>
+  <text x="110" y="1150" class="small-text">• 实时监控与数据可视化</text>
+  <text x="110" y="1170" class="small-text">• AI算法引擎(灾害预警)</text>
+  <text x="110" y="1190" class="small-text">• 联锁控制引擎</text>
+  <text x="110" y="1210" class="small-text">• 数据库(PostgreSQL/InfluxDB)</text>
+
+  <!-- Remote Control Console -->
+  <rect x="460" y="980" width="280" height="240" class="box" rx="5"/>
+  <text x="600" y="1010" class="subtitle" text-anchor="middle">远程操控台</text>
+  <text x="470" y="1040" class="text" font-weight="bold">主操作台:</text>
+  <text x="470" y="1060" class="small-text">• 多屏显示(视频/数据)</text>
+  <text x="470" y="1080" class="small-text">• 六自由度操控手柄</text>
+  <text x="470" y="1100" class="small-text">• 硬接线急停按钮</text>
+  <text x="470" y="1120" class="small-text">• 力反馈触觉装置</text>
+  <text x="470" y="1150" class="text" font-weight="bold">备用操作台:</text>
+  <text x="470" y="1170" class="small-text">• 井下安全硐室部署</text>
+  <text x="470" y="1190" class="small-text">• 主/备自动切换</text>
+  <text x="470" y="1210" class="small-text">• 故障转移时间&lt;3s</text>
+
+  <!-- Digital Twin System -->
+  <rect x="780" y="980" width="280" height="240" class="box-purple" rx="5"/>
+  <text x="920" y="1010" class="subtitle" text-anchor="middle">数字孪生系统</text>
+  <text x="790" y="1040" class="text" font-weight="bold">三维可视化:</text>
+  <text x="790" y="1060" class="small-text">• 1:1还原井下场景</text>
+  <text x="790" y="1080" class="small-text">• 实时设备姿态映射</text>
+  <text x="790" y="1100" class="small-text">• 环境参数热力图</text>
+  <text x="790" y="1120" class="small-text">• 人员位置实时标注</text>
+  <text x="790" y="1150" class="text" font-weight="bold">仿真推演:</text>
+  <text x="790" y="1170" class="small-text">• 灾害应急场景模拟</text>
+  <text x="790" y="1190" class="small-text">• 逃生路线优化</text>
+  <text x="790" y="1210" class="small-text">• 历史数据回放追溯</text>
+
+  <!-- AI Analysis Platform -->
+  <rect x="1100" y="980" width="370" height="240" class="box-warning" rx="5"/>
+  <text x="1285" y="1010" class="subtitle" text-anchor="middle">AI智能分析平台</text>
+  <text x="1110" y="1040" class="text" font-weight="bold">深度学习模型:</text>
+  <text x="1110" y="1060" class="small-text">• 灾害预警模型(LSTM+Attention)</text>
+  <text x="1110" y="1080" class="small-text">• 设备故障预测(RNN+时序分析)</text>
+  <text x="1110" y="1100" class="small-text">• 行为识别(YOLOv8+DeepSORT)</text>
+  <text x="1110" y="1120" class="small-text">• 煤岩识别(ResNet+迁移学习)</text>
+  <text x="1110" y="1150" class="text" font-weight="bold">推理框架:</text>
+  <text x="1110" y="1170" class="small-text">• NVIDIA TensorRT加速</text>
+  <text x="1110" y="1190" class="small-text">• GPU集群(RTX A6000×4)</text>
+  <text x="1110" y="1210" class="small-text">• 实时推理延迟&lt;100ms</text>
+
+  <!-- Arrows to safety ecosystem -->
+  <path d="M 260 1220 L 260 1300" class="arrow-secure"/>
+  <path d="M 600 1220 L 600 1300" class="arrow-secure"/>
+  <path d="M 920 1220 L 920 1300" class="arrow"/>
+  <path d="M 1285 1220 L 1285 1300" class="arrow"/>
+
+  <!-- Layer 4: Safety Ecosystem -->
+  <rect x="50" y="1300" width="1500" height="420" fill="#fff3e0" stroke="#c62828" stroke-width: 4; rx="10"/>
+  <text x="800" y="1335" class="subtitle" text-anchor="middle" fill="#c62828">【安全生态系统 - Safety Ecosystem】</text>
+
+  <!-- Hardware Interlocking -->
+  <rect x="80" y="1360" width="350" height="340" class="box-danger" rx="5"/>
+  <text x="255" y="1390" class="subtitle" text-anchor="middle">硬件联锁系统</text>
+  <text x="90" y="1420" class="text" font-weight="bold">多级保护逻辑:</text>
+  <text x="90" y="1445" class="small-text">Level 1: 瓦斯≥1.0% → 闭锁截割系统</text>
+  <text x="90" y="1465" class="small-text">Level 2: 瓦斯≥1.5% → 全设备断电</text>
+  <text x="90" y="1485" class="small-text">Level 3: 人员入险区 → 自动停机</text>
+  <text x="90" y="1505" class="small-text">Level 4: 顶板离层超标 → 禁止移机</text>
+  <text x="90" y="1525" class="small-text">Level 5: 红色灾害预警 → 紧急停机</text>
+  <text x="90" y="1555" class="text" font-weight="bold">智能设备保护:</text>
+  <text x="90" y="1575" class="small-text">• 过载/过热/过流自动降功率</text>
+  <text x="90" y="1595" class="small-text">• 防撞预警与自动避障</text>
+  <text x="90" y="1615" class="small-text">• 防闷车智能调速</text>
+  <text x="90" y="1635" class="small-text">• 漏电保护≤30mA 0.1s跳闸</text>
+  <text x="90" y="1665" class="text" font-weight="bold">执行逻辑: 硬接线+PLC双冗余</text>
+
+  <!-- Authorization & Access Control -->
+  <rect x="460" y="1360" width="350" height="340" class="box-warning" rx="5"/>
+  <text x="635" y="1390" class="subtitle" text-anchor="middle">权限与访问控制</text>
+  <text x="470" y="1420" class="text" font-weight="bold">身份认证:</text>
+  <text x="470" y="1445" class="small-text">• 人脸识别+虹膜双因子认证</text>
+  <text x="470" y="1465" class="small-text">• 生物特征活体检测</text>
+  <text x="470" y="1485" class="small-text">• 操作权限分级管理</text>
+  <text x="470" y="1505" class="small-text">  (观察员/操作员/工程师/管理员)</text>
+  <text x="470" y="1535" class="text" font-weight="bold">操作审计:</text>
+  <text x="470" y="1555" class="small-text">• 每次操作全流程录像留痕</text>
+  <text x="470" y="1575" class="small-text">• 操作日志区块链存证</text>
+  <text x="470" y="1595" class="small-text">• 异常操作实时告警</text>
+  <text x="470" y="1625" class="text" font-weight="bold">时间窗口控制:</text>
+  <text x="470" y="1645" class="small-text">• 禁止非工作时段远程操作</text>
+  <text x="470" y="1665" class="small-text">• 超时自动锁定需重新认证</text>
+
+  <!-- Emergency Response -->
+  <rect x="840" y="1360" width="300" height="340" class="box-success" rx="5"/>
+  <text x="990" y="1390" class="subtitle" text-anchor="middle">应急响应机制</text>
+  <text x="850" y="1420" class="text" font-weight="bold">自动应急联动:</text>
+  <text x="850" y="1445" class="small-text">• 灾害预警自动触发应急</text>
+  <text x="850" y="1465" class="small-text">• 逃生路线智能规划推送</text>
+  <text x="850" y="1485" class="small-text">• 应急广播自动播报</text>
+  <text x="850" y="1505" class="small-text">• 避险通道自动开启</text>
+  <text x="850" y="1525" class="small-text">• 危险区域门禁闭锁</text>
+  <text x="850" y="1555" class="text" font-weight="bold">远程应急接管:</text>
+  <text x="850" y="1575" class="small-text">• 地面专家远程接管控制</text>
+  <text x="850" y="1595" class="small-text">• 应急状态界面自动切换</text>
+  <text x="850" y="1615" class="small-text">• 一键全设备紧急停机</text>
+  <text x="850" y="1645" class="text" font-weight="bold">通信保障:</text>
+  <text x="850" y="1665" class="small-text">• 井下应急电话双向通话</text>
+
+  <!-- Data Security & Compliance -->
+  <rect x="1170" y="1360" width="300" height="340" class="box-purple" rx="5"/>
+  <text x="1320" y="1390" class="subtitle" text-anchor="middle">数据安全合规</text>
+  <text x="1180" y="1420" class="text" font-weight="bold">数据备份策略:</text>
+  <text x="1180" y="1445" class="small-text">• 实时数据镜像备份</text>
+  <text x="1180" y="1465" class="small-text">• 异地容灾中心同步</text>
+  <text x="1180" y="1485" class="small-text">• RPO≤5分钟, RTO≤15分钟</text>
+  <text x="1180" y="1515" class="text" font-weight="bold">合规标准:</text>
+  <text x="1180" y="1535" class="small-text">• GB 50-2016煤矿安全规程</text>
+  <text x="1180" y="1555" class="small-text">• AQ 1051煤矿通信标准</text>
+  <text x="1180" y="1575" class="small-text">• IEC 61508功能安全</text>
+  <text x="1180" y="1595" class="small-text">• ISO 27001信息安全</text>
+  <text x="1180" y="1625" class="text" font-weight="bold">隐私保护:</text>
+  <text x="1180" y="1645" class="small-text">• 个人数据脱敏处理</text>
+  <text x="1180" y="1665" class="small-text">• 访问日志加密存储</text>
+
+  <!-- Bottom Core Value -->
+  <rect x="150" y="1760" width="1300" height="120" fill="#c62828" stroke="#ffffff" stroke-width: 3; rx="10"/>
+  <text x="800" y="1800" class="title" text-anchor="middle" fill="#ffffff">核心安全价值 Core Safety Values</text>
+  <text x="300" y="1840" class="text" text-anchor="middle" fill="#ffffff" font-weight="bold">迎头无人</text>
+  <text x="300" y="1860" class="small-text" text-anchor="middle" fill="#ffeb3b">人从险区撤出</text>
+  <text x="600" y="1840" class="text" text-anchor="middle" fill="#ffffff" font-weight="bold">行为管控</text>
+  <text x="600" y="1860" class="small-text" text-anchor="middle" fill="#ffeb3b">违章零容忍</text>
+  <text x="900" y="1840" class="text" text-anchor="middle" fill="#ffffff" font-weight="bold">操作标准化</text>
+  <text x="900" y="1860" class="small-text" text-anchor="middle" fill="#ffeb3b">消除人为失误</text>
+  <text x="1200" y="1840" class="text" text-anchor="middle" fill="#ffffff" font-weight="bold">应急全联动</text>
+  <text x="1200" y="1860" class="small-text" text-anchor="middle" fill="#ffeb3b">智能化避险</text>
+
+  <!-- Technology Stack Footer -->
+  <rect x="50" y="1920" width="1500" height="60" fill="#f5f5f5" stroke="#666" stroke-width: 1; rx="5"/>
+  <text x="800" y="1945" class="text" text-anchor="middle" font-weight="bold">核心技术栈 Technology Stack:</text>
+  <text x="800" y="1970" class="small-text" text-anchor="middle">
+    5G网络切片 | 工业以太网PROFINET/EtherCAT | OPC UA/MQTT协议 | 边缘AI推理 | 数字孪生 | 硬件安全联锁 | AES-256加密 | IPSec VPN | 双因子认证 | 区块链审计
+  </text>
+</svg>
