@@ -1,132 +1,76 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="660" font-family="Microsoft YaHei, SimHei, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" font-family="Microsoft YaHei, SimHei, Arial, sans-serif">
 
   <!-- ===== 红色大方框 背景与外框 ===== -->
-  <rect x="4" y="4" width="892" height="652" rx="12" fill="#fff5f5"/>
-  <rect x="4" y="4" width="892" height="652" rx="12" fill="none" stroke="#cc0000" stroke-width="6"/>
+  <rect x="4" y="4" width="892" height="472" rx="12" fill="#fff5f5"/>
+  <rect x="4" y="4" width="892" height="472" rx="12" fill="none" stroke="#cc0000" stroke-width="6"/>
 
   <!-- ===== 标题区 ===== -->
-  <rect x="22" y="18" width="856" height="70" rx="10" fill="#1a3e6e" stroke="#0d2b50" stroke-width="2"/>
-  <text x="450" y="46" text-anchor="middle" font-size="18" fill="white" font-weight="bold">人员全域安全管控与远程无人化操作系统</text>
-  <text x="450" y="70" text-anchor="middle" font-size="13" fill="#a8c8ff">核心：人从险区撤出 · 行为全程管控 · 操作标准化 · 应急全联动</text>
+  <rect x="22" y="18" width="856" height="66" rx="10" fill="#1a3e6e" stroke="#0d2b50" stroke-width="2"/>
+  <text x="450" y="44" text-anchor="middle" font-size="18" fill="white" font-weight="bold">人员全域安全管控与远程无人化操作系统</text>
+  <text x="450" y="67" text-anchor="middle" font-size="13" fill="#a8c8ff">核心：人从险区撤出 · 行为全程管控 · 操作标准化 · 应急全联动</text>
 
-  <!-- ===== 标题到四大模块的连接线 ===== -->
-  <line x1="450" y1="88" x2="450" y2="108" stroke="#555" stroke-width="2"/>
-  <line x1="140" y1="108" x2="762" y2="108" stroke="#555" stroke-width="2"/>
-  <line x1="140" y1="108" x2="140" y2="128" stroke="#555" stroke-width="2"/>
-  <line x1="340" y1="108" x2="340" y2="128" stroke="#555" stroke-width="2"/>
-  <line x1="560" y1="108" x2="560" y2="128" stroke="#555" stroke-width="2"/>
-  <line x1="762" y1="108" x2="762" y2="128" stroke="#555" stroke-width="2"/>
+  <!-- ===== 标题到四大模块连接线 ===== -->
+  <line x1="450" y1="84" x2="450" y2="102" stroke="#555" stroke-width="2"/>
+  <line x1="141" y1="102" x2="761" y2="102" stroke="#555" stroke-width="2"/>
+  <line x1="141" y1="102" x2="141" y2="112" stroke="#555" stroke-width="2"/>
+  <line x1="341" y1="102" x2="341" y2="112" stroke="#555" stroke-width="2"/>
+  <line x1="561" y1="102" x2="561" y2="112" stroke="#555" stroke-width="2"/>
+  <line x1="761" y1="102" x2="761" y2="112" stroke="#555" stroke-width="2"/>
 
-  <!-- ===== 四大模块 ===== -->
+  <!-- ===== 四大模块（精简版，含关键技术与核心成果）===== -->
 
-  <!-- ① 远程无人化掘进作业系统 (绿色) -->
-  <rect x="42" y="128" width="198" height="60" rx="9" fill="#e8f5e9" stroke="#43a047" stroke-width="2.5"/>
-  <text x="141" y="152" text-anchor="middle" font-size="13" fill="#1b5e20" font-weight="bold">① 远程无人化</text>
-  <text x="141" y="172" text-anchor="middle" font-size="13" fill="#1b5e20" font-weight="bold">掘进作业系统</text>
+  <!-- ① 远程无人化掘进 (绿色) -->
+  <rect x="28" y="112" width="226" height="84" rx="9" fill="#e8f5e9" stroke="#43a047" stroke-width="2.5"/>
+  <text x="141" y="135" text-anchor="middle" font-size="13" fill="#1b5e20" font-weight="bold">① 远程无人化掘进</text>
+  <text x="141" y="155" text-anchor="middle" font-size="11" fill="#555">防爆惯导＋视觉SLAM＋5G传输</text>
+  <text x="141" y="174" text-anchor="middle" font-size="11" fill="#c62828" font-weight="bold">→ 迎头无人 · 少人值守</text>
 
   <!-- ② 人员全域精准管控 (蓝色) -->
-  <rect x="252" y="128" width="178" height="60" rx="9" fill="#e3f2fd" stroke="#1e88e5" stroke-width="2.5"/>
-  <text x="341" y="152" text-anchor="middle" font-size="13" fill="#0d47a1" font-weight="bold">② 人员全域</text>
-  <text x="341" y="172" text-anchor="middle" font-size="13" fill="#0d47a1" font-weight="bold">精准管控</text>
+  <rect x="264" y="112" width="194" height="84" rx="9" fill="#e3f2fd" stroke="#1e88e5" stroke-width="2.5"/>
+  <text x="361" y="135" text-anchor="middle" font-size="13" fill="#0d47a1" font-weight="bold">② 人员全域管控</text>
+  <text x="361" y="155" text-anchor="middle" font-size="11" fill="#555">UWB定位＋AI行为识别</text>
+  <text x="361" y="174" text-anchor="middle" font-size="11" fill="#c62828" font-weight="bold">→ 技术杜绝违章</text>
 
   <!-- ③ 标准化作业管控 (橙色) -->
-  <rect x="472" y="128" width="178" height="60" rx="9" fill="#fff3e0" stroke="#fb8c00" stroke-width="2.5"/>
-  <text x="561" y="152" text-anchor="middle" font-size="13" fill="#e65100" font-weight="bold">③ 标准化</text>
-  <text x="561" y="172" text-anchor="middle" font-size="13" fill="#e65100" font-weight="bold">作业管控</text>
+  <rect x="468" y="112" width="194" height="84" rx="9" fill="#fff3e0" stroke="#fb8c00" stroke-width="2.5"/>
+  <text x="565" y="135" text-anchor="middle" font-size="13" fill="#e65100" font-weight="bold">③ 标准化作业管控</text>
+  <text x="565" y="155" text-anchor="middle" font-size="11" fill="#555">远程操控锁定标准流程</text>
+  <text x="565" y="174" text-anchor="middle" font-size="11" fill="#c62828" font-weight="bold">→ 消除人为误操作</text>
 
   <!-- ④ 应急避险智能联动 (粉红色) -->
-  <rect x="662" y="128" width="198" height="60" rx="9" fill="#fce4ec" stroke="#e53935" stroke-width="2.5"/>
-  <text x="761" y="152" text-anchor="middle" font-size="13" fill="#880e4f" font-weight="bold">④ 应急避险</text>
-  <text x="761" y="172" text-anchor="middle" font-size="13" fill="#880e4f" font-weight="bold">智能联动</text>
-
-  <!-- ===== 各模块核心技术说明 ===== -->
-
-  <!-- ① 技术要点 -->
-  <line x1="141" y1="188" x2="141" y2="208" stroke="#43a047" stroke-width="1.5"/>
-  <rect x="30" y="208" width="222" height="100" rx="7" fill="white" stroke="#43a047" stroke-width="1.5"/>
-  <text x="141" y="228" text-anchor="middle" font-size="11" fill="#333">▸ 防爆惯导＋激光定位</text>
-  <text x="141" y="247" text-anchor="middle" font-size="11" fill="#333">▸ 视觉SLAM＋5G低时延</text>
-  <text x="141" y="266" text-anchor="middle" font-size="11" fill="#555">全自动截割／自主导航</text>
-  <text x="141" y="283" text-anchor="middle" font-size="11" fill="#555">巷道纠偏／断面精准成型</text>
-  <text x="141" y="300" text-anchor="middle" font-size="10" fill="#c62828" font-weight="bold">→ 迎头无人 · 少人值守</text>
-
-  <!-- ② 技术要点 -->
-  <line x1="341" y1="188" x2="341" y2="208" stroke="#1e88e5" stroke-width="1.5"/>
-  <rect x="242" y="208" width="198" height="100" rx="7" fill="white" stroke="#1e88e5" stroke-width="1.5"/>
-  <text x="341" y="228" text-anchor="middle" font-size="11" fill="#333">▸ UWB厘米级定位（≤10cm）</text>
-  <text x="341" y="247" text-anchor="middle" font-size="11" fill="#333">▸ AI视频行为识别</text>
-  <text x="341" y="266" text-anchor="middle" font-size="11" fill="#555">违规闯入→声光告警</text>
-  <text x="341" y="283" text-anchor="middle" font-size="11" fill="#555">人员入险区→设备自动闭锁</text>
-  <text x="341" y="300" text-anchor="middle" font-size="10" fill="#c62828" font-weight="bold">→ 技术杜绝违章作业</text>
-
-  <!-- ③ 技术要点 -->
-  <line x1="561" y1="188" x2="561" y2="208" stroke="#fb8c00" stroke-width="1.5"/>
-  <rect x="450" y="208" width="220" height="100" rx="7" fill="white" stroke="#fb8c00" stroke-width="1.5"/>
-  <text x="561" y="228" text-anchor="middle" font-size="11" fill="#333">▸ 远程操控锁定标准化流程</text>
-  <text x="561" y="247" text-anchor="middle" font-size="11" fill="#333">▸ 固化最优工况参数</text>
-  <text x="561" y="266" text-anchor="middle" font-size="11" fill="#555">消除疲劳操作／误操作</text>
-  <text x="561" y="283" text-anchor="middle" font-size="11" fill="#555">新手短期培训即可上岗</text>
-  <text x="561" y="300" text-anchor="middle" font-size="10" fill="#c62828" font-weight="bold">→ 消除人为操作失误事故</text>
-
-  <!-- ④ 技术要点 -->
-  <line x1="761" y1="188" x2="761" y2="208" stroke="#e53935" stroke-width="1.5"/>
-  <rect x="650" y="208" width="222" height="100" rx="7" fill="white" stroke="#e53935" stroke-width="1.5"/>
-  <text x="761" y="228" text-anchor="middle" font-size="11" fill="#333">▸ 灾害预警＋人员定位终端</text>
-  <text x="761" y="247" text-anchor="middle" font-size="11" fill="#333">▸ 通风／门禁联动</text>
-  <text x="761" y="266" text-anchor="middle" font-size="11" fill="#555">自动规划最优逃生路线</text>
-  <text x="761" y="283" text-anchor="middle" font-size="11" fill="#555">联动开避险通道闭锁危险区</text>
-  <text x="761" y="300" text-anchor="middle" font-size="10" fill="#c62828" font-weight="bold">→ 全流程智能引导避险</text>
+  <rect x="672" y="112" width="214" height="84" rx="9" fill="#fce4ec" stroke="#e53935" stroke-width="2.5"/>
+  <text x="779" y="135" text-anchor="middle" font-size="13" fill="#880e4f" font-weight="bold">④ 应急避险联动</text>
+  <text x="779" y="155" text-anchor="middle" font-size="11" fill="#555">灾害预警＋逃生路线规划</text>
+  <text x="779" y="174" text-anchor="middle" font-size="11" fill="#c62828" font-weight="bold">→ 全程智能引导避险</text>
 
   <!-- ===== 汇集到综合管控平台 ===== -->
-  <!-- 水平汇聚总线 -->
-  <line x1="141" y1="308" x2="141" y2="378" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="341" y1="308" x2="341" y2="378" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="561" y1="308" x2="561" y2="378" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="761" y1="308" x2="761" y2="378" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
-  <line x1="141" y1="378" x2="761" y2="378" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="141" y1="196" x2="141" y2="252" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="361" y1="196" x2="361" y2="252" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="565" y1="196" x2="565" y2="252" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="779" y1="196" x2="779" y2="252" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <line x1="141" y1="252" x2="779" y2="252" stroke="#888" stroke-width="1.5" stroke-dasharray="6,4"/>
 
   <!-- 下箭头到平台 -->
-  <line x1="450" y1="378" x2="450" y2="398" stroke="#333" stroke-width="2"/>
-  <polygon points="444,396 456,396 450,408" fill="#333"/>
+  <line x1="450" y1="252" x2="450" y2="272" stroke="#333" stroke-width="2"/>
+  <polygon points="444,270 456,270 450,282" fill="#333"/>
 
-  <!-- 综合管控平台 -->
-  <rect x="220" y="408" width="460" height="58" rx="10" fill="#1a3e6e" stroke="#0d2b50" stroke-width="2"/>
-  <text x="450" y="433" text-anchor="middle" font-size="14" fill="white" font-weight="bold">综合管控平台（地面集控中心）</text>
-  <text x="450" y="455" text-anchor="middle" font-size="11" fill="#a8c8ff">数据汇聚 · 联动控制 · 全要素可视化 · 应急指挥</text>
+  <!-- ===== 综合管控平台 ===== -->
+  <rect x="220" y="282" width="460" height="56" rx="10" fill="#1a3e6e" stroke="#0d2b50" stroke-width="2"/>
+  <text x="450" y="307" text-anchor="middle" font-size="14" fill="white" font-weight="bold">综合管控平台（地面集控中心）</text>
+  <text x="450" y="328" text-anchor="middle" font-size="11" fill="#a8c8ff">数据汇聚 · 联动控制 · 全要素可视化 · 应急指挥</text>
 
-  <!-- 平台到四大成果的连线 -->
-  <line x1="450" y1="466" x2="450" y2="482" stroke="#333" stroke-width="2"/>
-  <line x1="160" y1="482" x2="740" y2="482" stroke="#333" stroke-width="2"/>
-  <line x1="160" y1="482" x2="160" y2="498" stroke="#333" stroke-width="2"/>
-  <line x1="360" y1="482" x2="360" y2="498" stroke="#333" stroke-width="2"/>
-  <line x1="580" y1="482" x2="580" y2="498" stroke="#333" stroke-width="2"/>
-  <line x1="740" y1="482" x2="740" y2="498" stroke="#333" stroke-width="2"/>
-
-  <!-- ===== 四大核心成果 ===== -->
-  <rect x="60" y="498" width="200" height="55" rx="9" fill="#e8f5e9" stroke="#43a047" stroke-width="2.5"/>
-  <text x="160" y="521" text-anchor="middle" font-size="13" fill="#1b5e20" font-weight="bold">迎头无人</text>
-  <text x="160" y="541" text-anchor="middle" font-size="12" fill="#2e7d32">人从险区撤出</text>
-
-  <rect x="262" y="498" width="196" height="55" rx="9" fill="#e3f2fd" stroke="#1e88e5" stroke-width="2.5"/>
-  <text x="360" y="521" text-anchor="middle" font-size="13" fill="#0d47a1" font-weight="bold">行为管控</text>
-  <text x="360" y="541" text-anchor="middle" font-size="12" fill="#1565c0">违章零容忍</text>
-
-  <rect x="480" y="498" width="200" height="55" rx="9" fill="#fff3e0" stroke="#fb8c00" stroke-width="2.5"/>
-  <text x="580" y="521" text-anchor="middle" font-size="13" fill="#e65100" font-weight="bold">操作标准化</text>
-  <text x="580" y="541" text-anchor="middle" font-size="12" fill="#bf360c">消除人为失误</text>
-
-  <rect x="640" y="498" width="200" height="55" rx="9" fill="#fce4ec" stroke="#e53935" stroke-width="2.5"/>
-  <text x="740" y="521" text-anchor="middle" font-size="13" fill="#880e4f" font-weight="bold">应急全联动</text>
-  <text x="740" y="541" text-anchor="middle" font-size="12" fill="#ad1457">智能化避险</text>
+  <!-- 平台到结论的箭头 -->
+  <line x1="450" y1="338" x2="450" y2="360" stroke="#333" stroke-width="2"/>
+  <polygon points="444,358 456,358 450,370" fill="#333"/>
 
   <!-- ===== 底部结论 ===== -->
-  <rect x="120" y="572" width="660" height="40" rx="8" fill="#b71c1c" stroke="#7f0000" stroke-width="1.5"/>
-  <text x="450" y="597" text-anchor="middle" font-size="13" fill="white" font-weight="bold">彻底消除人为因素引发的安全风险</text>
+  <rect x="120" y="370" width="660" height="46" rx="8" fill="#b71c1c" stroke="#7f0000" stroke-width="1.5"/>
+  <text x="450" y="399" text-anchor="middle" font-size="14" fill="white" font-weight="bold">彻底消除人为因素引发的安全风险</text>
 
   <!-- ===== 图例 ===== -->
-  <line x1="660" y1="626" x2="700" y2="626" stroke="#555" stroke-width="2"/>
-  <text x="706" y="630" font-size="11" fill="#555">有线传输</text>
-  <line x1="760" y1="626" x2="800" y2="626" stroke="#555" stroke-width="2" stroke-dasharray="6,4"/>
-  <text x="806" y="630" font-size="11" fill="#555">无线传输</text>
+  <line x1="640" y1="448" x2="680" y2="448" stroke="#555" stroke-width="2"/>
+  <text x="686" y="452" font-size="11" fill="#555">有线传输</text>
+  <line x1="750" y1="448" x2="790" y2="448" stroke="#555" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="796" y="452" font-size="11" fill="#555">无线传输</text>
 
 </svg>

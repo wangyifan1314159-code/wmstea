@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="920" font-family="Microsoft YaHei, SimHei, Arial, sans-serif">
+
+  <!-- ===== 红色大方框 背景与外框 ===== -->
+  <rect x="4" y="4" width="752" height="912" rx="12" fill="#fff5f5"/>
+  <rect x="4" y="4" width="752" height="912" rx="12" fill="none" stroke="#cc0000" stroke-width="6"/>
+
+  <!-- ===== 标题区 ===== -->
+  <rect x="22" y="18" width="716" height="62" rx="10" fill="#1a3e6e" stroke="#0d2b50" stroke-width="2"/>
+  <text x="380" y="44" text-anchor="middle" font-size="17" fill="white" font-weight="bold">AI行为识别全过程</text>
+  <text x="380" y="66" text-anchor="middle" font-size="12" fill="#a8c8ff">从视频采集到告警联动的端到端智能感知流程</text>
+
+  <!-- ===== 步骤 1：视频采集 ===== -->
+  <line x1="380" y1="80" x2="380" y2="100" stroke="#555" stroke-width="2"/>
+  <polygon points="374,98 386,98 380,110" fill="#555"/>
+  <rect x="130" y="110" width="500" height="64" rx="9" fill="#e8f5e9" stroke="#43a047" stroke-width="2.5"/>
+  <text x="380" y="135" text-anchor="middle" font-size="14" fill="#1b5e20" font-weight="bold">① 视频采集</text>
+  <text x="380" y="157" text-anchor="middle" font-size="11" fill="#555">防爆AI摄像仪 → 5G低时延传输（端到端≤150ms） → 视频流接入平台</text>
+
+  <!-- 步骤标注 -->
+  <rect x="22" y="120" width="100" height="30" rx="6" fill="#e8f5e9" stroke="#43a047" stroke-width="1"/>
+  <text x="72" y="140" text-anchor="middle" font-size="10" fill="#1b5e20">硬件层</text>
+
+  <!-- ===== 步骤 2：视频预处理 ===== -->
+  <line x1="380" y1="174" x2="380" y2="194" stroke="#555" stroke-width="2"/>
+  <polygon points="374,192 386,192 380,204" fill="#555"/>
+  <rect x="130" y="204" width="500" height="80" rx="9" fill="#e3f2fd" stroke="#1e88e5" stroke-width="2.5"/>
+  <text x="380" y="228" text-anchor="middle" font-size="14" fill="#0d47a1" font-weight="bold">② 视频预处理</text>
+  <text x="380" y="248" text-anchor="middle" font-size="11" fill="#555">帧提取（关键帧采样）→ 图像增强（去噪/补光）</text>
+  <text x="380" y="267" text-anchor="middle" font-size="11" fill="#555">分辨率归一化 → 时序片段切割（滑动窗口）</text>
+
+  <rect x="22" y="218" width="100" height="30" rx="6" fill="#e3f2fd" stroke="#1e88e5" stroke-width="1"/>
+  <text x="72" y="238" text-anchor="middle" font-size="10" fill="#0d47a1">预处理层</text>
+
+  <!-- ===== 步骤 3：目标检测与追踪 ===== -->
+  <line x1="380" y1="284" x2="380" y2="304" stroke="#555" stroke-width="2"/>
+  <polygon points="374,302 386,302 380,314" fill="#555"/>
+  <rect x="130" y="314" width="500" height="80" rx="9" fill="#fff3e0" stroke="#fb8c00" stroke-width="2.5"/>
+  <text x="380" y="338" text-anchor="middle" font-size="14" fill="#e65100" font-weight="bold">③ 目标检测与追踪</text>
+  <text x="380" y="358" text-anchor="middle" font-size="11" fill="#555">YOLOv8 实时人员检测 → 生成人员边界框</text>
+  <text x="380" y="377" text-anchor="middle" font-size="11" fill="#555">DeepSORT 多目标追踪 → 跨帧持续锁定人员ID</text>
+
+  <rect x="22" y="328" width="100" height="30" rx="6" fill="#fff3e0" stroke="#fb8c00" stroke-width="1"/>
+  <text x="72" y="348" text-anchor="middle" font-size="10" fill="#e65100">感知层</text>
+
+  <!-- ===== 步骤 4：人体姿态估计 ===== -->
+  <line x1="380" y1="394" x2="380" y2="414" stroke="#555" stroke-width="2"/>
+  <polygon points="374,412 386,412 380,424" fill="#555"/>
+  <rect x="130" y="424" width="500" height="80" rx="9" fill="#f3e5f5" stroke="#8e24aa" stroke-width="2.5"/>
+  <text x="380" y="448" text-anchor="middle" font-size="14" fill="#4a148c" font-weight="bold">④ 人体姿态估计</text>
+  <text x="380" y="468" text-anchor="middle" font-size="11" fill="#555">OpenPose / MediaPipe → 提取17个关键骨骼节点</text>
+  <text x="380" y="487" text-anchor="middle" font-size="11" fill="#555">构建人体骨骼图序列（头、肩、肘、腕、髋、膝、踝）</text>
+
+  <rect x="22" y="438" width="100" height="30" rx="6" fill="#f3e5f5" stroke="#8e24aa" stroke-width="1"/>
+  <text x="72" y="458" text-anchor="middle" font-size="10" fill="#4a148c">骨骼提取层</text>
+
+  <!-- ===== 步骤 5：行为特征提取 ===== -->
+  <line x1="380" y1="504" x2="380" y2="524" stroke="#555" stroke-width="2"/>
+  <polygon points="374,522 386,522 380,534" fill="#555"/>
+  <rect x="130" y="534" width="500" height="80" rx="9" fill="#e8eaf6" stroke="#3949ab" stroke-width="2.5"/>
+  <text x="380" y="558" text-anchor="middle" font-size="14" fill="#1a237e" font-weight="bold">⑤ 行为特征提取</text>
+  <text x="380" y="578" text-anchor="middle" font-size="11" fill="#555">时序骨骼序列 → ST-GCN / LSTM 提取时空运动特征</text>
+  <text x="380" y="597" text-anchor="middle" font-size="11" fill="#555">视频帧序列 → 3D CNN 提取外观-动态融合特征</text>
+
+  <rect x="22" y="548" width="100" height="30" rx="6" fill="#e8eaf6" stroke="#3949ab" stroke-width="1"/>
+  <text x="72" y="568" text-anchor="middle" font-size="10" fill="#1a237e">特征提取层</text>
+
+  <!-- ===== 步骤 6：行为分类识别 ===== -->
+  <line x1="380" y1="614" x2="380" y2="634" stroke="#555" stroke-width="2"/>
+  <polygon points="374,632 386,632 380,644" fill="#555"/>
+  <rect x="130" y="644" width="500" height="88" rx="9" fill="#fce4ec" stroke="#e53935" stroke-width="2.5"/>
+  <text x="380" y="668" text-anchor="middle" font-size="14" fill="#880e4f" font-weight="bold">⑥ 行为分类识别</text>
+  <text x="380" y="688" text-anchor="middle" font-size="11" fill="#555">Softmax 分类器 → 输出行为类别置信度</text>
+  <text x="380" y="707" text-anchor="middle" font-size="11" fill="#555">识别类型：未戴安全帽 · 违规闯入 · 违章操作 · 正常作业</text>
+  <text x="380" y="724" text-anchor="middle" font-size="10" fill="#c62828" font-weight="bold">置信度阈值过滤（≥0.85触发告警，可按现场误报率调整）</text>
+
+  <rect x="22" y="658" width="100" height="30" rx="6" fill="#fce4ec" stroke="#e53935" stroke-width="1"/>
+  <text x="72" y="678" text-anchor="middle" font-size="10" fill="#880e4f">识别层</text>
+
+  <!-- ===== 步骤 7：告警与联动处置 ===== -->
+  <line x1="380" y1="732" x2="380" y2="752" stroke="#555" stroke-width="2"/>
+  <polygon points="374,750 386,750 380,762" fill="#333"/>
+  <rect x="130" y="762" width="500" height="80" rx="9" fill="#b71c1c" stroke="#7f0000" stroke-width="2.5"/>
+  <text x="380" y="786" text-anchor="middle" font-size="14" fill="white" font-weight="bold">⑦ 告警与联动处置</text>
+  <text x="380" y="806" text-anchor="middle" font-size="11" fill="#ffcdd2">声光告警推送 → 管控平台实时预警</text>
+  <text x="380" y="824" text-anchor="middle" font-size="11" fill="#ffcdd2">人员进入危险区 → 掘进机硬联锁停机闭锁</text>
+
+  <rect x="22" y="776" width="100" height="30" rx="6" fill="#b71c1c" stroke="#7f0000" stroke-width="1"/>
+  <text x="72" y="796" text-anchor="middle" font-size="10" fill="white">响应层</text>
+
+  <!-- ===== 步骤 8：数据上传与追溯 ===== -->
+  <line x1="380" y1="842" x2="380" y2="858" stroke="#555" stroke-width="2"/>
+  <polygon points="374,856 386,856 380,868" fill="#555"/>
+  <rect x="200" y="868" width="360" height="36" rx="8" fill="#1a3e6e" stroke="#0d2b50" stroke-width="2"/>
+  <text x="380" y="892" text-anchor="middle" font-size="12" fill="white" font-weight="bold">⑧ 数据上传平台 · 违章行为闭环追溯</text>
+
+</svg>
