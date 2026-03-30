@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿井综掘面全域安全智能管控系统 · 物联网四层架构</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --coal-dark: #0d1117;
+    --coal-blue: #0a1628;
+    --accent-blue: #1565c0;
+    --accent-cyan: #00bcd4;
+    --accent-green: #00e676;
+    --accent-orange: #ff9800;
+    --accent-red: #f44336;
+    --accent-purple: #7c4dff;
+    --text-light: #e0f7fa;
+    --text-dim: #90a4ae;
+    --card-bg: rgba(13,25,55,0.85);
+    --border-glow: rgba(0,188,212,0.4);
+  }
+
+  body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+    background: var(--coal-dark);
+    color: var(--text-light);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  /* ===== SLIDESHOW ===== */
+  .slideshow {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  .slide.prev {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* ===== NAV ===== */
+  .nav {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 40px;
+    border: 1px solid var(--border-glow);
+    backdrop-filter: blur(8px);
+  }
+  .nav button {
+    background: var(--accent-blue);
+    border: none;
+    color: #fff;
+    padding: 8px 22px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  .nav button:hover { background: var(--accent-cyan); color: #000; }
+  .nav button:disabled { opacity: 0.3; cursor: default; }
+  .nav .dots {
+    display: flex;
+    gap: 8px;
+  }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .dot.active { background: var(--accent-cyan); transform: scale(1.3); }
+  .slide-counter {
+    font-size: 12px;
+    color: var(--text-dim);
+    min-width: 48px;
+    text-align: center;
+  }
+
+  /* ===== COMMON HEADER ===== */
+  .slide-header {
+    padding: 16px 40px 10px;
+    border-bottom: 1px solid rgba(0,188,212,0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .slide-header .badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(0,188,212,0.15);
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    white-space: nowrap;
+  }
+  .slide-header h1 {
+    font-size: 15px;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  /* ===== ANIMATED BG ===== */
+  .bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,188,212,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,188,212,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .content { position: relative; z-index: 1; flex: 1; overflow: hidden; }
+
+  /* ===== SLIDE 1 — TITLE ===== */
+  #slide-1 {
+    background: linear-gradient(135deg, #0d1117 0%, #0a1f3d 50%, #0d1117 100%);
+  }
+  .title-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    gap: 24px;
+  }
+  .title-icon {
+    font-size: 72px;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { text-shadow: 0 0 20px rgba(0,188,212,0.5); transform: scale(1); }
+    50% { text-shadow: 0 0 40px rgba(0,188,212,0.9); transform: scale(1.05); }
+  }
+  .title-main {
+    font-size: 36px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00bcd4, #00e676, #1565c0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.3;
+  }
+  .title-sub {
+    font-size: 20px;
+    color: var(--accent-cyan);
+    letter-spacing: 4px;
+  }
+  .title-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    max-width: 600px;
+    line-height: 1.8;
+  }
+  .title-tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tag {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    border: 1px solid;
+  }
+  .tag-blue { border-color: var(--accent-blue); color: #64b5f6; background: rgba(21,101,192,0.15); }
+  .tag-cyan { border-color: var(--accent-cyan); color: var(--accent-cyan); background: rgba(0,188,212,0.1); }
+  .tag-green { border-color: var(--accent-green); color: var(--accent-green); background: rgba(0,230,118,0.1); }
+  .tag-orange { border-color: var(--accent-orange); color: var(--accent-orange); background: rgba(255,152,0,0.1); }
+  .tag-purple { border-color: var(--accent-purple); color: #b39ddb; background: rgba(124,77,255,0.1); }
+  .tag-red { border-color: var(--accent-red); color: #ef9a9a; background: rgba(244,67,54,0.1); }
+
+  /* ===== SLIDE 2 — OVERVIEW ===== */
+  #slide-2 {
+    background: linear-gradient(180deg, #080f1e 0%, #0d1117 100%);
+  }
+  .overview-body {
+    padding: 20px 40px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    height: 100%;
+  }
+  .overview-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  .arch-flow {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-content: center;
+  }
+  .arch-layer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .arch-layer:hover {
+    transform: translateX(6px);
+    box-shadow: 0 0 20px rgba(0,188,212,0.2);
+  }
+  .arch-layer.l1 { border-color: rgba(244,67,54,0.4); background: rgba(244,67,54,0.06); }
+  .arch-layer.l2 { border-color: rgba(255,152,0,0.4); background: rgba(255,152,0,0.06); }
+  .arch-layer.l3 { border-color: rgba(0,188,212,0.4); background: rgba(0,188,212,0.06); }
+  .arch-layer.l4 { border-color: rgba(0,230,118,0.4); background: rgba(0,230,118,0.06); }
+
+  .arch-layer-icon { font-size: 32px; min-width: 50px; text-align: center; }
+  .arch-layer-info { flex: 1; }
+  .arch-layer-name { font-size: 17px; font-weight: 600; }
+  .arch-layer.l1 .arch-layer-name { color: #ef9a9a; }
+  .arch-layer.l2 .arch-layer-name { color: #ffcc80; }
+  .arch-layer.l3 .arch-layer-name { color: var(--accent-cyan); }
+  .arch-layer.l4 .arch-layer-name { color: #a5d6a7; }
+  .arch-layer-desc { font-size: 13px; color: var(--text-dim); margin-top: 3px; }
+  .arch-layer-devices {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .arch-device-chip {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text-dim);
+  }
+  .arch-arrow {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 20px;
+    line-height: 1;
+    padding: 2px 0;
+  }
+  .arch-protocol-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    min-width: 90px;
+    text-align: center;
+  }
+  .proto-red { background: rgba(244,67,54,0.2); border: 1px solid rgba(244,67,54,0.4); color: #ef9a9a; }
+  .proto-orange { background: rgba(255,152,0,0.2); border: 1px solid rgba(255,152,0,0.4); color: #ffcc80; }
+  .proto-cyan { background: rgba(0,188,212,0.2); border: 1px solid rgba(0,188,212,0.4); color: var(--accent-cyan); }
+  .proto-green { background: rgba(0,230,118,0.2); border: 1px solid rgba(0,230,118,0.4); color: #a5d6a7; }
+
+  /* ===== SLIDE 3-6 — DETAIL LAYERS ===== */
+  .layer-slide {
+    padding: 12px 32px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    height: 100%;
+    overflow: hidden;
+  }
+  .layer-title-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .layer-num {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .layer-title-text h2 {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .layer-title-text p {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+  .layer-core-role {
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.7;
+    border-left: 4px solid;
+  }
+
+  /* DEVICES GRID */
+  .devices-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    flex: 1;
+  }
+  .device-card {
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .device-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 14px 14px 0 0;
+  }
+  .device-card:hover {
+    transform: translateY(-4px);
+  }
+  .device-icon-wrap {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    position: relative;
+  }
+  .device-icon-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    animation: spin 4s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .device-name { font-size: 13px; font-weight: 600; color: var(--text-light); }
+  .device-nickname {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .device-spec { font-size: 11px; color: var(--text-dim); line-height: 1.6; }
+  .device-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* PROTOCOL ROW */
+  .protocol-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .protocol-label { font-size: 12px; color: var(--text-dim); white-space: nowrap; }
+  .proto-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .proto-pill {
+    font-size: 12px;
+    padding: 4px 14px;
+    border-radius: 14px;
+    border: 1px solid;
+    font-weight: 600;
+  }
+  .protocol-note { font-size: 12px; color: var(--text-dim); line-height: 1.5; flex: 1; }
+
+  /* ============================================
+     LAYER-SPECIFIC COLORS
+  ============================================ */
+  /* L1 — 感知层 — red/pink */
+  #slide-3 { background: linear-gradient(135deg, #0d1117 0%, #1a0a0a 100%); }
+  .l1-num { background: rgba(244,67,54,0.15); border: 2px solid rgba(244,67,54,0.5); color: #ef9a9a; }
+  .l1-title { color: #ef9a9a; }
+  .l1-role { background: rgba(244,67,54,0.06); border-left-color: #f44336; }
+  .l1-card { border-color: rgba(244,67,54,0.3); background: rgba(244,67,54,0.04); }
+  .l1-card::before { background: linear-gradient(90deg, #f44336, transparent); }
+  .l1-card:hover { box-shadow: 0 8px 24px rgba(244,67,54,0.2); }
+  .l1-icon-wrap { background: rgba(244,67,54,0.12); border: 2px solid rgba(244,67,54,0.4); }
+  .l1-icon-wrap::after { border-top-color: rgba(244,67,54,0.6); }
+  .l1-nick { background: rgba(244,67,54,0.15); color: #ef9a9a; border: 1px solid rgba(244,67,54,0.3); }
+  .l1-status { color: #ef9a9a; }
+  .l1-dot { background: #f44336; box-shadow: 0 0 6px #f44336; }
+  .l1-proto { border-color: rgba(244,67,54,0.5); color: #ef9a9a; background: rgba(244,67,54,0.1); }
+
+  /* L2 — 网络层 — orange */
+  #slide-4 { background: linear-gradient(135deg, #0d1117 0%, #1a110a 100%); }
+  .l2-num { background: rgba(255,152,0,0.15); border: 2px solid rgba(255,152,0,0.5); color: #ffcc80; }
+  .l2-title { color: #ffcc80; }
+  .l2-role { background: rgba(255,152,0,0.06); border-left-color: #ff9800; }
+  .l2-card { border-color: rgba(255,152,0,0.3); background: rgba(255,152,0,0.04); }
+  .l2-card::before { background: linear-gradient(90deg, #ff9800, transparent); }
+  .l2-card:hover { box-shadow: 0 8px 24px rgba(255,152,0,0.2); }
+  .l2-icon-wrap { background: rgba(255,152,0,0.12); border: 2px solid rgba(255,152,0,0.4); }
+  .l2-icon-wrap::after { border-top-color: rgba(255,152,0,0.6); }
+  .l2-nick { background: rgba(255,152,0,0.15); color: #ffcc80; border: 1px solid rgba(255,152,0,0.3); }
+  .l2-status { color: #ffcc80; }
+  .l2-dot { background: #ff9800; box-shadow: 0 0 6px #ff9800; }
+  .l2-proto { border-color: rgba(255,152,0,0.5); color: #ffcc80; background: rgba(255,152,0,0.1); }
+
+  /* L3 — 平台层 — cyan */
+  #slide-5 { background: linear-gradient(135deg, #0d1117 0%, #0a1a1e 100%); }
+  .l3-num { background: rgba(0,188,212,0.15); border: 2px solid rgba(0,188,212,0.5); color: var(--accent-cyan); }
+  .l3-title { color: var(--accent-cyan); }
+  .l3-role { background: rgba(0,188,212,0.06); border-left-color: var(--accent-cyan); }
+  .l3-card { border-color: rgba(0,188,212,0.3); background: rgba(0,188,212,0.04); }
+  .l3-card::before { background: linear-gradient(90deg, var(--accent-cyan), transparent); }
+  .l3-card:hover { box-shadow: 0 8px 24px rgba(0,188,212,0.2); }
+  .l3-icon-wrap { background: rgba(0,188,212,0.12); border: 2px solid rgba(0,188,212,0.4); }
+  .l3-icon-wrap::after { border-top-color: rgba(0,188,212,0.6); }
+  .l3-nick { background: rgba(0,188,212,0.15); color: var(--accent-cyan); border: 1px solid rgba(0,188,212,0.3); }
+  .l3-status { color: var(--accent-cyan); }
+  .l3-dot { background: var(--accent-cyan); box-shadow: 0 0 6px var(--accent-cyan); }
+  .l3-proto { border-color: rgba(0,188,212,0.5); color: var(--accent-cyan); background: rgba(0,188,212,0.1); }
+
+  /* L4 — 应用层 — green */
+  #slide-6 { background: linear-gradient(135deg, #0d1117 0%, #0a1a0a 100%); }
+  .l4-num { background: rgba(0,230,118,0.15); border: 2px solid rgba(0,230,118,0.5); color: #a5d6a7; }
+  .l4-title { color: #a5d6a7; }
+  .l4-role { background: rgba(0,230,118,0.06); border-left-color: var(--accent-green); }
+  .l4-card { border-color: rgba(0,230,118,0.3); background: rgba(0,230,118,0.04); }
+  .l4-card::before { background: linear-gradient(90deg, var(--accent-green), transparent); }
+  .l4-card:hover { box-shadow: 0 8px 24px rgba(0,230,118,0.2); }
+  .l4-icon-wrap { background: rgba(0,230,118,0.12); border: 2px solid rgba(0,230,118,0.4); }
+  .l4-icon-wrap::after { border-top-color: rgba(0,230,118,0.6); }
+  .l4-nick { background: rgba(0,230,118,0.15); color: #a5d6a7; border: 1px solid rgba(0,230,118,0.3); }
+  .l4-status { color: #a5d6a7; }
+  .l4-dot { background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
+  .l4-proto { border-color: rgba(0,230,118,0.5); color: #a5d6a7; background: rgba(0,230,118,0.1); }
+
+  /* Scrollable on small screens */
+  .layer-slide { overflow-y: auto; }
+  .layer-slide::-webkit-scrollbar { width: 4px; }
+  .layer-slide::-webkit-scrollbar-track { background: transparent; }
+  .layer-slide::-webkit-scrollbar-thumb { background: rgba(0,188,212,0.3); border-radius: 2px; }
+
+  /* responsive */
+  @media (max-width: 800px) {
+    .devices-grid { grid-template-columns: repeat(2, 1fr); }
+    .title-main { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="slideshow" id="slideshow">
+
+  <!-- ===== SLIDE 1: TITLE ===== -->
+  <div class="slide active" id="slide-1">
+    <div class="bg-grid"></div>
+    <div class="title-center content">
+      <div class="title-icon">⛏️</div>
+      <div class="title-main">矿井综掘面全域安全<br>智能管控系统</div>
+      <div class="title-sub">物联网四层架构（精简版）</div>
+      <div class="title-desc">
+        基于物联网技术，构建从井下感知到地面管控的完整数字化链路，
+        实现对环境风险、设备健康与人员行为的实时监测与智能预警。
+      </div>
+      <div class="title-tags">
+        <span class="tag tag-red">🔴 感知层</span>
+        <span class="tag tag-orange">🟠 网络层</span>
+        <span class="tag tag-cyan">🔵 平台层</span>
+        <span class="tag tag-green">🟢 应用层</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2: OVERVIEW ===== -->
+  <div class="slide" id="slide-2">
+    <div class="bg-grid"></div>
+    <div class="content overview-body">
+      <div class="overview-title">📐 四层架构总览</div>
+      <div class="arch-flow">
+
+        <div class="arch-layer l4" onclick="goTo(5)">
+          <div class="arch-layer-icon">🖥️</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">4. 应用层（业务呈现）</div>
+            <div class="arch-layer-desc">数据可视化 · 远程操控 · 移动报警</div>
+            <div class="arch-layer-devices" style="margin-top:6px;">
+              <span class="arch-device-chip">集控大屏</span>
+              <span class="arch-device-chip">远程操作台</span>
+              <span class="arch-device-chip">手机 App</span>
+            </div>
+          </div>
+          <span class="arch-protocol-badge proto-green">HTTP/HTTPS</span>
+        </div>
+
+        <div class="arch-arrow">⬇ ⬆</div>
+
+        <div class="arch-layer l3" onclick="goTo(4)">
+          <div class="arch-layer-icon">🧠</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">3. 平台层（数据中枢）</div>
+            <div class="arch-layer-desc">数据存储 · AI预警 · 标准接口</div>
+            <div class="arch-layer-devices" style="margin-top:6px;">
+              <span class="arch-device-chip">数据服务器</span>
+              <span class="arch-device-chip">AI计算节点</span>
+            </div>
+          </div>
+          <span class="arch-protocol-badge proto-cyan">MQTT + HTTP</span>
+        </div>
+
+        <div class="arch-arrow">⬇ ⬆</div>
+
+        <div class="arch-layer l2" onclick="goTo(3)">
+          <div class="arch-layer-icon">📡</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">2. 网络层（传输通道）</div>
+            <div class="arch-layer-desc">有线+无线混合组网 · 高可靠传输</div>
+            <div class="arch-layer-devices" style="margin-top:6px;">
+              <span class="arch-device-chip">矿用5G基站</span>
+              <span class="arch-device-chip">工业环网交换机</span>
+              <span class="arch-device-chip">边缘计算网关</span>
+            </div>
+          </div>
+          <span class="arch-protocol-badge proto-orange">TCP/IP + MQTT</span>
+        </div>
+
+        <div class="arch-arrow">⬇ ⬆</div>
+
+        <div class="arch-layer l1" onclick="goTo(2)">
+          <div class="arch-layer-icon">🔌</div>
+          <div class="arch-layer-info">
+            <div class="arch-layer-name">1. 感知层（数据源头）</div>
+            <div class="arch-layer-desc">环境监测 · 设备诊断 · 人员定位</div>
+            <div class="arch-layer-devices" style="margin-top:6px;">
+              <span class="arch-device-chip">瓦斯/粉尘传感器</span>
+              <span class="arch-device-chip">顶板激光雷达</span>
+              <span class="arch-device-chip">振动/温度传感器</span>
+              <span class="arch-device-chip">UWB定位标签</span>
+            </div>
+          </div>
+          <span class="arch-protocol-badge proto-red">Modbus RTU/RS485</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3: 感知层 ===== -->
+  <div class="slide" id="slide-3">
+    <div class="bg-grid"></div>
+    <div class="layer-slide content">
+      <div class="layer-title-row">
+        <div class="layer-num l1-num">01</div>
+        <div class="layer-title-text">
+          <h2 class="l1-title">感知层 · 数据源头</h2>
+          <p>将井下物理环境、设备状态和人员行为转化为可传输的数字信号</p>
+        </div>
+      </div>
+
+      <div class="layer-core-role l1-role">
+        💡 <strong>核心作用：</strong>
+        将井下的物理环境、设备状态和人员行为转化为可传输的数字信号（0和1）。所有数据的产生源头，是整个系统的"神经末梢"。
+      </div>
+
+      <div class="devices-grid">
+
+        <!-- 设备1: 瓦斯传感器 -->
+        <div class="device-card l1-card">
+          <div class="device-icon-wrap l1-icon-wrap">💨</div>
+          <div class="device-name">瓦斯 / 粉尘传感器</div>
+          <span class="device-nickname l1-nick">🛡️ 环境哨兵 #1</span>
+          <div class="device-spec">
+            检测 CH₄、CO 及粉尘浓度<br>
+            超限自动触发一级预警<br>
+            量程：0–100% LEL
+          </div>
+          <div class="device-status l1-status">
+            <span class="status-dot l1-dot"></span>在线监测中
+          </div>
+        </div>
+
+        <!-- 设备2: 顶板激光雷达 -->
+        <div class="device-card l1-card">
+          <div class="device-icon-wrap l1-icon-wrap">🔦</div>
+          <div class="device-name">顶板激光雷达</div>
+          <span class="device-nickname l1-nick">🛡️ 环境哨兵 #2</span>
+          <div class="device-spec">
+            3D扫描顶板形变量<br>
+            扫描精度：±2 mm<br>
+            实时输出点云数据
+          </div>
+          <div class="device-status l1-status">
+            <span class="status-dot l1-dot"></span>扫描运行中
+          </div>
+        </div>
+
+        <!-- 设备3: 振动/温度传感器 -->
+        <div class="device-card l1-card">
+          <div class="device-icon-wrap l1-icon-wrap">📳</div>
+          <div class="device-name">振动 / 温度传感器</div>
+          <span class="device-nickname l1-nick">🩺 设备听诊器</span>
+          <div class="device-spec">
+            监测掘进机主轴振动<br>
+            温度范围：-20~+125°C<br>
+            故障特征频率分析
+          </div>
+          <div class="device-status l1-status">
+            <span class="status-dot l1-dot"></span>健康监测中
+          </div>
+        </div>
+
+        <!-- 设备4: UWB定位标签 -->
+        <div class="device-card l1-card">
+          <div class="device-icon-wrap l1-icon-wrap">📍</div>
+          <div class="device-name">UWB 定位标签</div>
+          <span class="device-nickname l1-nick">🧭 人员信标</span>
+          <div class="device-spec">
+            实时人员三维定位<br>
+            精度：±30 cm<br>
+            工作频段：6.5 GHz
+          </div>
+          <div class="device-status l1-status">
+            <span class="status-dot l1-dot"></span>位置追踪中
+          </div>
+        </div>
+
+        <!-- 协议说明 -->
+        <div class="device-card l1-card" style="grid-column: span 2;">
+          <div class="device-icon-wrap l1-icon-wrap" style="width:52px;height:52px;font-size:24px;">🔗</div>
+          <div class="device-name">通信协议 · Modbus RTU / RS485</div>
+          <div class="device-spec" style="text-align:left;line-height:1.9;">
+            📌 <strong style="color:#ef9a9a;">为什么选 Modbus RTU？</strong><br>
+            工业传感器最通用的"语言"，可靠、低成本、抗干扰能力强。<br>
+            RS485 物理层支持多点组网（最多32个节点/段），在有粉尘、强磁的井下环境经过数十年验证，数据由边缘网关汇聚后进行协议转换。
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 4: 网络层 ===== -->
+  <div class="slide" id="slide-4">
+    <div class="bg-grid"></div>
+    <div class="layer-slide content">
+      <div class="layer-title-row">
+        <div class="layer-num l2-num">02</div>
+        <div class="layer-title-text">
+          <h2 class="l2-title">网络层 · 传输通道</h2>
+          <p>构建"有线 + 无线"高可靠网络，将数据从井下搬运至地面</p>
+        </div>
+      </div>
+
+      <div class="layer-core-role l2-role">
+        💡 <strong>核心作用：</strong>
+        解决井下环境复杂、距离远的问题，构建一张"有线+无线"的高可靠网络，负责把数据从井下搬运到地面，是整个系统的"高速公路"。
+      </div>
+
+      <div class="devices-grid">
+
+        <!-- 设备1: 5G基站 -->
+        <div class="device-card l2-card">
+          <div class="device-icon-wrap l2-icon-wrap">📡</div>
+          <div class="device-name">矿用5G基站</div>
+          <span class="device-nickname l2-nick">📶 无线接入点</span>
+          <div class="device-spec">
+            负责移动设备接入<br>
+            高清视频实时上传<br>
+            覆盖半径：≥200m
+          </div>
+          <div class="device-status l2-status">
+            <span class="status-dot l2-dot"></span>信号覆盖中
+          </div>
+        </div>
+
+        <!-- 设备2: 工业环网交换机 -->
+        <div class="device-card l2-card">
+          <div class="device-icon-wrap l2-icon-wrap">🔀</div>
+          <div class="device-name">工业环网交换机</div>
+          <span class="device-nickname l2-nick">🔌 有线骨干</span>
+          <div class="device-spec">
+            固定设备冗余传输<br>
+            环网自愈时间：&lt;50ms<br>
+            防爆等级：ExdIICT6
+          </div>
+          <div class="device-status l2-status">
+            <span class="status-dot l2-dot"></span>冗余传输中
+          </div>
+        </div>
+
+        <!-- 设备3: 边缘计算网关 -->
+        <div class="device-card l2-card">
+          <div class="device-icon-wrap l2-icon-wrap">🖥️</div>
+          <div class="device-name">边缘计算网关</div>
+          <span class="device-nickname l2-nick">🔄 协议翻译官</span>
+          <div class="device-spec">
+            Modbus → MQTT 转换<br>
+            本地边缘预处理<br>
+            断网缓存 &amp; 续传
+          </div>
+          <div class="device-status l2-status">
+            <span class="status-dot l2-dot"></span>协议转换中
+          </div>
+        </div>
+
+        <!-- 网络拓扑说明 -->
+        <div class="device-card l2-card" style="grid-column: span 3; flex-direction: row; align-items: flex-start; text-align: left; gap: 20px;">
+          <div style="min-width:52px;text-align:center;">
+            <div class="device-icon-wrap l2-icon-wrap" style="width:52px;height:52px;font-size:24px;margin:0 auto;">🗺️</div>
+          </div>
+          <div>
+            <div class="device-name" style="text-align:left;margin-bottom:8px;">通信协议 · TCP/IP + MQTT</div>
+            <div class="device-spec" style="line-height:1.9;">
+              📌 <strong style="color:#ffcc80;">TCP/IP</strong> 是网络基础，确保数据不丢包；<br>
+              📌 <strong style="color:#ffcc80;">MQTT</strong> 是核心应用层协议，"轻量级"+"抗弱网"，适合将海量传感器数据上传至云端。<br>
+              📌 <strong style="color:#ffcc80;">边缘网关</strong> 是核心枢纽：将井下 Modbus 设备数据汇总，执行本地预警逻辑，再通过 MQTT 推送至平台层。
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 5: 平台层 ===== -->
+  <div class="slide" id="slide-5">
+    <div class="bg-grid"></div>
+    <div class="layer-slide content">
+      <div class="layer-title-row">
+        <div class="layer-num l3-num">03</div>
+        <div class="layer-title-text">
+          <h2 class="l3-title">平台层 · 数据中枢</h2>
+          <p>系统"大脑"：接收、存储、清洗、分析海量数据，提供标准接口</p>
+        </div>
+      </div>
+
+      <div class="layer-core-role l3-role">
+        💡 <strong>核心作用：</strong>
+        充当系统的"大脑"，负责接收海量数据、存储数据，并通过算法进行清洗和分析，为上层应用提供标准接口。
+      </div>
+
+      <div class="devices-grid">
+
+        <!-- 设备1: 数据服务器 -->
+        <div class="device-card l3-card">
+          <div class="device-icon-wrap l3-icon-wrap">🗄️</div>
+          <div class="device-name">数据服务器</div>
+          <span class="device-nickname l3-nick">📦 时序数据库</span>
+          <div class="device-spec">
+            存储瓦斯浓度曲线等时序数据<br>
+            时序引擎：InfluxDB / TDengine<br>
+            保留周期：≥180天
+          </div>
+          <div class="device-status l3-status">
+            <span class="status-dot l3-dot"></span>持续写入中
+          </div>
+        </div>
+
+        <!-- 设备2: AI计算节点 -->
+        <div class="device-card l3-card">
+          <div class="device-icon-wrap l3-icon-wrap">🤖</div>
+          <div class="device-name">AI 计算节点</div>
+          <span class="device-nickname l3-nick">⚡ 预警引擎</span>
+          <div class="device-spec">
+            运行顶板灾害预测模型<br>
+            设备故障诊断（CNN+LSTM）<br>
+            推理延迟：&lt;200ms
+          </div>
+          <div class="device-status l3-status">
+            <span class="status-dot l3-dot"></span>模型推理中
+          </div>
+        </div>
+
+        <!-- AI模型展示 -->
+        <div class="device-card l3-card">
+          <div class="device-icon-wrap l3-icon-wrap">📊</div>
+          <div class="device-name">数据处理管道</div>
+          <span class="device-nickname l3-nick">🔬 分析中枢</span>
+          <div class="device-spec">
+            数据清洗 &amp; 去噪<br>
+            多源数据融合<br>
+            REST API 对外开放
+          </div>
+          <div class="device-status l3-status">
+            <span class="status-dot l3-dot"></span>数据流转中
+          </div>
+        </div>
+
+        <!-- 协议说明 -->
+        <div class="device-card l3-card" style="grid-column: span 3; flex-direction: row; align-items: flex-start; text-align: left; gap: 20px;">
+          <div style="min-width:52px;text-align:center;">
+            <div class="device-icon-wrap l3-icon-wrap" style="width:52px;height:52px;font-size:24px;margin:0 auto;">🌐</div>
+          </div>
+          <div>
+            <div class="device-name" style="text-align:left;margin-bottom:8px;">通信协议 · MQTT + HTTP</div>
+            <div class="device-spec" style="line-height:1.9;">
+              📌 <strong style="color:var(--accent-cyan);">MQTT Broker（如 EMQX）</strong> 接收来自边缘网关的实时数据流；<br>
+              📌 <strong style="color:var(--accent-cyan);">HTTP RESTful API</strong> 对外提供标准接口，供 Web 端和 App 调用报表、历史数据；<br>
+              📌 AI 模型对瓦斯浓度、振动特征、顶板位移进行多维融合分析，提前发现异常趋势。
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 6: 应用层 ===== -->
+  <div class="slide" id="slide-6">
+    <div class="bg-grid"></div>
+    <div class="layer-slide content">
+      <div class="layer-title-row">
+        <div class="layer-num l4-num">04</div>
+        <div class="layer-title-text">
+          <h2 class="l4-title">应用层 · 业务呈现</h2>
+          <p>将数据转化为可视化界面，供管理人员监控、决策和远程操控</p>
+        </div>
+      </div>
+
+      <div class="layer-core-role l4-role">
+        💡 <strong>核心作用：</strong>
+        将枯燥的数据转化为可视化的界面，供管理人员监控、决策和远程操控，是整个系统对外呈现的"门面"。
+      </div>
+
+      <div class="devices-grid">
+
+        <!-- 设备1: 集控大屏 -->
+        <div class="device-card l4-card">
+          <div class="device-icon-wrap l4-icon-wrap">🖥️</div>
+          <div class="device-name">集控大屏</div>
+          <span class="device-nickname l4-nick">🗺️ 可视化中心</span>
+          <div class="device-spec">
+            展示数字孪生 3D 场景<br>
+            实时报警列表推送<br>
+            GIS 人员分布热力图
+          </div>
+          <div class="device-status l4-status">
+            <span class="status-dot l4-dot"></span>显示运行中
+          </div>
+        </div>
+
+        <!-- 设备2: 远程操作台 -->
+        <div class="device-card l4-card">
+          <div class="device-icon-wrap l4-icon-wrap">🕹️</div>
+          <div class="device-name">远程操作台</div>
+          <span class="device-nickname l4-nick">🎮 指挥控制</span>
+          <div class="device-spec">
+            远程操控掘进机<br>
+            紧急停机一键触发<br>
+            操作日志全程留存
+          </div>
+          <div class="device-status l4-status">
+            <span class="status-dot l4-dot"></span>控制就绪
+          </div>
+        </div>
+
+        <!-- 设备3: 移动终端 -->
+        <div class="device-card l4-card">
+          <div class="device-icon-wrap l4-icon-wrap">📱</div>
+          <div class="device-name">移动终端 App</div>
+          <span class="device-nickname l4-nick">🔔 随身报警</span>
+          <div class="device-spec">
+            查看实时预警推送<br>
+            历史报表查询<br>
+            人员撤离指令下达
+          </div>
+          <div class="device-status l4-status">
+            <span class="status-dot l4-dot"></span>推送服务中
+          </div>
+        </div>
+
+        <!-- 协议说明 -->
+        <div class="device-card l4-card" style="grid-column: span 3; flex-direction: row; align-items: flex-start; text-align: left; gap: 20px;">
+          <div style="min-width:52px;text-align:center;">
+            <div class="device-icon-wrap l4-icon-wrap" style="width:52px;height:52px;font-size:24px;margin:0 auto;">🔒</div>
+          </div>
+          <div>
+            <div class="device-name" style="text-align:left;margin-bottom:8px;">通信协议 · HTTP / HTTPS</div>
+            <div class="device-spec" style="line-height:1.9;">
+              📌 <strong style="color:#a5d6a7;">HTTP/HTTPS</strong> 是互联网最标准的协议，负责网页和 App 与后台服务器之间的数据交互；<br>
+              📌 查询报表、下发控制指令均通过 <strong style="color:#a5d6a7;">RESTful API</strong> 实现，所有指令均经身份认证；<br>
+              📌 数字孪生大屏通过 <strong style="color:#a5d6a7;">WebSocket</strong> 保持与平台层的长连接，确保毫秒级数据刷新。
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- end slideshow -->
+
+<!-- NAV BAR -->
+<div class="nav">
+  <button id="btn-prev" onclick="changeSlide(-1)" disabled>◀ 上一页</button>
+  <div class="dots" id="dots"></div>
+  <span class="slide-counter" id="counter">1 / 6</span>
+  <button id="btn-next" onclick="changeSlide(1)">下一页 ▶</button>
+</div>
+
+<script>
+  const TOTAL = 6;
+  let current = 0;
+
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  // Build dots
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    slides[current].classList.add('prev');
+    setTimeout(() => { slides[current].classList.remove('prev'); }, 500);
+    current = n;
+    slides[current].classList.add('active');
+    updateUI();
+  }
+
+  function changeSlide(dir) {
+    const next = current + dir;
+    if (next < 0 || next >= TOTAL) return;
+    goTo(next);
+  }
+
+  function updateUI() {
+    counter.textContent = (current + 1) + ' / ' + TOTAL;
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === TOTAL - 1;
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+
+  updateUI();
+</script>
+</body>
+</html>
