@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿井综掘面全域安全智能管控系统</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    background: #0a0e1a;
+    color: #e0e8f0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ── Slide container ─────────────────────────────── */
+  .slides-wrapper {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 60px;
+    background: #0a0e1a;
+    animation: fadeIn .45s ease;
+  }
+  .slide.active { display: flex; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── Navigation ─────────────────────────────────── */
+  .nav {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 14px;
+    z-index: 100;
+    align-items: center;
+  }
+  .nav button {
+    background: rgba(0,188,212,.18);
+    border: 1px solid #00bcd4;
+    color: #00e5ff;
+    padding: 8px 22px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background .2s;
+  }
+  .nav button:hover { background: rgba(0,188,212,.38); }
+  .nav .dots { display: flex; gap: 8px; align-items: center; }
+  .nav .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #335;
+    border: 1px solid #00bcd4;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .nav .dot.active { background: #00bcd4; }
+  .slide-counter {
+    position: fixed;
+    top: 18px;
+    right: 28px;
+    font-size: 13px;
+    color: #4a7a9b;
+  }
+
+  /* ── Common headings ─────────────────────────────── */
+  .slide-title {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #00e5ff, #69f0ae);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .slide-subtitle {
+    font-size: 14px;
+    color: #4a7a9b;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg,#00bcd4,#69f0ae);
+    border-radius: 2px;
+    margin: 0 auto 32px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE 1 – Title
+  ═══════════════════════════════════════════════ */
+  #slide1 { background: radial-gradient(ellipse at 60% 40%, #0d2137 0%, #0a0e1a 70%); }
+  .title-badge {
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: #00bcd4;
+    border: 1px solid #00bcd4;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+  .main-title {
+    font-size: 44px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.25;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, #00e5ff 0%, #69f0ae 50%, #00bcd4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .main-sub {
+    font-size: 18px;
+    color: #5fa8c8;
+    text-align: center;
+    letter-spacing: 6px;
+    margin-bottom: 40px;
+  }
+  .tag-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .tag {
+    background: rgba(0,188,212,.12);
+    border: 1px solid rgba(0,188,212,.4);
+    color: #80deea;
+    padding: 5px 14px;
+    border-radius: 14px;
+    font-size: 13px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE 2 – Architecture Overview
+  ═══════════════════════════════════════════════ */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 18px;
+    width: 100%;
+    max-width: 1100px;
+  }
+  .arch-card {
+    border-radius: 14px;
+    padding: 22px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .arch-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,.4); }
+  .arch-card.l1 { background: rgba(255,87,34,.07);  border-color: rgba(255,87,34,.4);  }
+  .arch-card.l2 { background: rgba(33,150,243,.07); border-color: rgba(33,150,243,.4); }
+  .arch-card.l3 { background: rgba(156,39,176,.07); border-color: rgba(156,39,176,.4); }
+  .arch-card.l4 { background: rgba(76,175,80,.07);  border-color: rgba(76,175,80,.4);  }
+  .arch-icon { font-size: 42px; }
+  .arch-layer { font-size: 11px; letter-spacing: 3px; opacity: .6; }
+  .arch-name { font-size: 18px; font-weight: 700; }
+  .arch-card.l1 .arch-name { color:#ff7043; }
+  .arch-card.l2 .arch-name { color:#42a5f5; }
+  .arch-card.l3 .arch-name { color:#ba68c8; }
+  .arch-card.l4 .arch-name { color:#66bb6a; }
+  .arch-proto {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin-top: 4px;
+  }
+  .arch-card.l1 .arch-proto { background:rgba(255,87,34,.2); color:#ff8a65; }
+  .arch-card.l2 .arch-proto { background:rgba(33,150,243,.2); color:#64b5f6; }
+  .arch-card.l3 .arch-proto { background:rgba(156,39,176,.2); color:#ce93d8; }
+  .arch-card.l4 .arch-proto { background:rgba(76,175,80,.2); color:#a5d6a7; }
+  .arch-desc { font-size: 12px; color: #7a9eb8; text-align: center; line-height: 1.6; }
+
+  /* arrow row */
+  .arch-arrows {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    max-width: 1100px;
+    margin: -6px 0;
+    padding: 0 80px;
+  }
+  .arch-arrows span {
+    flex: 1;
+    text-align: center;
+    font-size: 22px;
+    color: #2a4a6a;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SLIDES 3-6 – Layer Details
+  ═══════════════════════════════════════════════ */
+  .layer-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    max-width: 1060px;
+  }
+
+  /* left – info card */
+  .info-card {
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .info-role {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #aac4d8;
+  }
+  .proto-box {
+    background: rgba(0,0,0,.25);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .proto-label { font-size: 11px; letter-spacing: 3px; color: #4a6a7a; }
+  .proto-value { font-size: 15px; font-weight: 700; color: #00e5ff; }
+  .proto-note { font-size: 11px; color: #5a7a8a; line-height: 1.7; }
+
+  /* right – device grid */
+  .device-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 14px;
+  }
+  .device-card {
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: border-color .2s, background .2s;
+    cursor: default;
+  }
+  .device-card:hover {
+    border-color: rgba(0,188,212,.5);
+    background: rgba(0,188,212,.06);
+  }
+  .device-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    position: relative;
+  }
+  /* LED pulse dot */
+  .device-icon::after {
+    content: '';
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #69f0ae;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.2;} }
+
+  .device-name { font-size: 12px; font-weight: 600; text-align: center; color: #c8dce8; }
+  .device-tag  { font-size: 10px; color: #4a7a9b; text-align: center; }
+
+  /* layer accent colors */
+  .layer-l1 .device-icon { background: rgba(255,87,34,.15);  }
+  .layer-l2 .device-icon { background: rgba(33,150,243,.15); }
+  .layer-l3 .device-icon { background: rgba(156,39,176,.15); }
+  .layer-l4 .device-icon { background: rgba(76,175,80,.15);  }
+
+  .layer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+    align-self: flex-start;
+  }
+  .layer-l1 .layer-badge { background:rgba(255,87,34,.15); color:#ff7043; border:1px solid rgba(255,87,34,.4); }
+  .layer-l2 .layer-badge { background:rgba(33,150,243,.15); color:#42a5f5; border:1px solid rgba(33,150,243,.4); }
+  .layer-l3 .layer-badge { background:rgba(156,39,176,.15); color:#ba68c8; border:1px solid rgba(156,39,176,.4); }
+  .layer-l4 .layer-badge { background:rgba(76,175,80,.15); color:#66bb6a; border:1px solid rgba(76,175,80,.4); }
+
+  /* ═══════════════════════════════════════════════
+     SLIDE 7 – Protocol Summary
+  ═══════════════════════════════════════════════ */
+  .proto-table {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+    font-size: 14px;
+  }
+  .proto-table th {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #4a7a9b;
+    text-align: left;
+    padding: 8px 16px;
+    background: rgba(0,0,0,.3);
+  }
+  .proto-table td {
+    padding: 14px 16px;
+    background: rgba(255,255,255,.03);
+    border-top: 1px solid rgba(255,255,255,.05);
+    border-bottom: 1px solid rgba(255,255,255,.05);
+  }
+  .proto-table td:first-child { border-left:1px solid rgba(255,255,255,.05); border-radius:8px 0 0 8px; }
+  .proto-table td:last-child  { border-right:1px solid rgba(255,255,255,.05); border-radius:0 8px 8px 0; }
+  .proto-table tr:hover td { background: rgba(0,188,212,.05); }
+  .pt-layer { font-weight:700; }
+  .pt-l1 { color:#ff7043; }
+  .pt-l2 { color:#42a5f5; }
+  .pt-l3 { color:#ba68c8; }
+  .pt-l4 { color:#66bb6a; }
+  .pt-proto { color:#00e5ff; font-family:monospace; font-size:13px; }
+  .pt-note { color:#7a9eb8; font-size:12px; }
+
+  /* ── Scanline overlay ─────────────────────────── */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.04) 2px, rgba(0,0,0,.04) 4px);
+    pointer-events: none;
+    z-index: 999;
+  }
+</style>
+</head>
+<body>
+
+<div class="slides-wrapper">
+
+  <!-- ═══ SLIDE 1: Title ════════════════════════════ -->
+  <section class="slide active" id="slide1">
+    <div class="title-badge">IoT · Smart Mining · Safety Control</div>
+    <div class="main-title">矿井综掘面全域<br>安全智能管控系统</div>
+    <div class="main-sub">物联网四层架构</div>
+    <div class="divider"></div>
+    <div class="tag-row">
+      <span class="tag">🛡️ 感知层</span>
+      <span class="tag">📡 网络层</span>
+      <span class="tag">🧠 平台层</span>
+      <span class="tag">🖥️ 应用层</span>
+    </div>
+    <div style="margin-top:36px;font-size:13px;color:#2a4a6a;letter-spacing:2px;">
+      Modbus RTU &nbsp;·&nbsp; MQTT &nbsp;·&nbsp; TCP/IP &nbsp;·&nbsp; HTTP/HTTPS
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 2: Architecture Overview ═══════════ -->
+  <section class="slide" id="slide2">
+    <div class="slide-title">系统整体架构</div>
+    <div class="slide-subtitle">四层物联网架构 · IoT Four-Layer Architecture</div>
+    <div class="arch-grid">
+      <!-- L4 App -->
+      <div class="arch-card l4" role="region" aria-label="应用层 Layer 4">
+        <div class="arch-icon">🖥️</div>
+        <div class="arch-layer">LAYER 4</div>
+        <div class="arch-name">应用层</div>
+        <div class="arch-proto">HTTP / HTTPS</div>
+        <div class="arch-desc">可视化监控<br>远程操控 · 移动App</div>
+      </div>
+      <!-- L3 Platform -->
+      <div class="arch-card l3" role="region" aria-label="平台层 Layer 3">
+        <div class="arch-icon">🧠</div>
+        <div class="arch-layer">LAYER 3</div>
+        <div class="arch-name">平台层</div>
+        <div class="arch-proto">MQTT + HTTP</div>
+        <div class="arch-desc">数据存储 · AI预警<br>标准接口</div>
+      </div>
+      <!-- L2 Network -->
+      <div class="arch-card l2" role="region" aria-label="网络层 Layer 2">
+        <div class="arch-icon">📡</div>
+        <div class="arch-layer">LAYER 2</div>
+        <div class="arch-name">网络层</div>
+        <div class="arch-proto">TCP/IP + MQTT</div>
+        <div class="arch-desc">5G + 工业环网<br>边缘网关转换</div>
+      </div>
+      <!-- L1 Perception -->
+      <div class="arch-card l1" role="region" aria-label="感知层 Layer 1">
+        <div class="arch-icon">🔬</div>
+        <div class="arch-layer">LAYER 1</div>
+        <div class="arch-name">感知层</div>
+        <div class="arch-proto">Modbus RTU/RS485</div>
+        <div class="arch-desc">环境 · 设备 · 人员<br>三类传感器</div>
+      </div>
+    </div>
+    <div style="margin-top:24px;display:flex;align-items:center;gap:10px;font-size:12px;color:#2a5a7a;">
+      <span>井下物理世界</span>
+      <span style="flex:1;height:1px;background:linear-gradient(90deg,#1a3a5a,#00bcd4,#00bcd4,#1a3a5a);"></span>
+      <span style="font-size:18px;">⬆</span>
+      <span style="flex:1;height:1px;background:linear-gradient(90deg,#1a3a5a,#00bcd4,#00bcd4,#1a3a5a);"></span>
+      <span>地面管理中心</span>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 3: 感知层 ═══════════════════════════ -->
+  <section class="slide" id="slide3">
+    <div class="slide-title">感知层 · Perception Layer</div>
+    <div class="slide-subtitle">将物理环境转化为数字信号</div>
+    <div class="layer-layout layer-l1">
+      <!-- left -->
+      <div class="info-card">
+        <span class="layer-badge">🔬 Layer 1 · 感知层</span>
+        <div class="info-role">
+          核心作用：将井下的物理环境、设备状态和人员行为转化为可传输的数字信号（0和1），作为整个系统的数据源头。
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:120px;background:rgba(255,87,34,.08);border:1px solid rgba(255,87,34,.2);border-radius:8px;padding:10px;font-size:12px;color:#ff8a65;">
+            <div style="font-weight:700;margin-bottom:4px;">🌫️ 环境哨兵</div>
+            <div style="color:#9a6a5a;line-height:1.6;">瓦斯 / 粉尘传感器<br>顶板激光雷达</div>
+          </div>
+          <div style="flex:1;min-width:120px;background:rgba(255,152,0,.08);border:1px solid rgba(255,152,0,.2);border-radius:8px;padding:10px;font-size:12px;color:#ffa726;">
+            <div style="font-weight:700;margin-bottom:4px;">⚙️ 设备听诊器</div>
+            <div style="color:#9a7a4a;line-height:1.6;">振动传感器<br>温度传感器</div>
+          </div>
+          <div style="flex:1;min-width:120px;background:rgba(33,150,243,.08);border:1px solid rgba(33,150,243,.2);border-radius:8px;padding:10px;font-size:12px;color:#42a5f5;">
+            <div style="font-weight:700;margin-bottom:4px;">👷 人员信标</div>
+            <div style="color:#4a6a8a;line-height:1.6;">UWB定位标签<br>人员位置追踪</div>
+          </div>
+        </div>
+        <div class="proto-box">
+          <div class="proto-label">通信协议</div>
+          <div class="proto-value">Modbus RTU / RS485</div>
+          <div class="proto-note">工业传感器通用语言，将数据汇集到边缘网关（协议翻译官）</div>
+        </div>
+      </div>
+      <!-- right – devices -->
+      <div class="device-grid">
+        <div class="device-card">
+          <div class="device-icon">🌡️</div>
+          <div class="device-name">瓦斯传感器</div>
+          <div class="device-tag">CH₄ 浓度监测</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🌫️</div>
+          <div class="device-name">粉尘传感器</div>
+          <div class="device-tag">PM 浓度检测</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">📐</div>
+          <div class="device-name">顶板激光雷达</div>
+          <div class="device-tag">形变实时监测</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">📳</div>
+          <div class="device-name">振动传感器</div>
+          <div class="device-tag">设备健康监测</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🌡️</div>
+          <div class="device-name">温度传感器</div>
+          <div class="device-tag">设备温度监控</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">📍</div>
+          <div class="device-name">UWB 定位标签</div>
+          <div class="device-tag">人员精确定位</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 4: 网络层 ═══════════════════════════ -->
+  <section class="slide" id="slide4">
+    <div class="slide-title">网络层 · Network Layer</div>
+    <div class="slide-subtitle">有线 + 无线高可靠传输通道</div>
+    <div class="layer-layout layer-l2">
+      <div class="info-card">
+        <span class="layer-badge">📡 Layer 2 · 网络层</span>
+        <div class="info-role">
+          核心作用：解决井下环境复杂、距离远的问题，构建"有线+无线"高可靠网络，将数据从井下搬运至地面。
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:100px;background:rgba(33,150,243,.08);border:1px solid rgba(33,150,243,.25);border-radius:8px;padding:10px;font-size:12px;color:#42a5f5;">
+            <div style="font-weight:700;margin-bottom:4px;">📶 无线接入点</div>
+            <div style="color:#4a6a8a;line-height:1.6;">矿用5G基站<br>移动设备&高清视频</div>
+          </div>
+          <div style="flex:1;min-width:100px;background:rgba(0,188,212,.08);border:1px solid rgba(0,188,212,.25);border-radius:8px;padding:10px;font-size:12px;color:#26c6da;">
+            <div style="font-weight:700;margin-bottom:4px;">🔌 有线骨干</div>
+            <div style="color:#3a7a8a;line-height:1.6;">工业环网交换机<br>冗余传输</div>
+          </div>
+          <div style="flex:1;min-width:100px;background:rgba(103,58,183,.08);border:1px solid rgba(103,58,183,.25);border-radius:8px;padding:10px;font-size:12px;color:#9575cd;">
+            <div style="font-weight:700;margin-bottom:4px;">🔄 协议翻译官</div>
+            <div style="color:#6a4a9a;line-height:1.6;">边缘计算网关<br>Modbus→MQTT</div>
+          </div>
+        </div>
+        <div class="proto-box">
+          <div class="proto-label">通信协议</div>
+          <div class="proto-value">TCP/IP + MQTT</div>
+          <div class="proto-note">TCP/IP 确保不丢包；MQTT 轻量抗弱网，适合海量传感数据上传</div>
+        </div>
+      </div>
+      <div class="device-grid">
+        <div class="device-card">
+          <div class="device-icon">📶</div>
+          <div class="device-name">矿用5G基站</div>
+          <div class="device-tag">无线高速接入</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🔀</div>
+          <div class="device-name">环网交换机</div>
+          <div class="device-tag">有线冗余骨干</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🖥️</div>
+          <div class="device-name">边缘计算网关</div>
+          <div class="device-tag">协议转换核心</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">📡</div>
+          <div class="device-name">无线AP</div>
+          <div class="device-tag">井下覆盖节点</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🔗</div>
+          <div class="device-name">光纤链路</div>
+          <div class="device-tag">主干传输通道</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🛡️</div>
+          <div class="device-name">防爆路由器</div>
+          <div class="device-tag">本安型网络设备</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 5: 平台层 ═══════════════════════════ -->
+  <section class="slide" id="slide5">
+    <div class="slide-title">平台层 · Platform Layer</div>
+    <div class="slide-subtitle">数据中枢 · 系统大脑</div>
+    <div class="layer-layout layer-l3">
+      <div class="info-card">
+        <span class="layer-badge">🧠 Layer 3 · 平台层</span>
+        <div class="info-role">
+          核心作用：充当系统"大脑"，接收并存储海量数据，通过算法进行清洗和分析，为上层应用提供标准API接口。
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:100px;background:rgba(156,39,176,.08);border:1px solid rgba(156,39,176,.25);border-radius:8px;padding:10px;font-size:12px;color:#ba68c8;">
+            <div style="font-weight:700;margin-bottom:4px;">💾 数据服务器</div>
+            <div style="color:#7a4a9a;line-height:1.6;">时序数据存储<br>瓦斯浓度曲线</div>
+          </div>
+          <div style="flex:1;min-width:100px;background:rgba(233,30,99,.08);border:1px solid rgba(233,30,99,.25);border-radius:8px;padding:10px;font-size:12px;color:#f06292;">
+            <div style="font-weight:700;margin-bottom:4px;">🤖 AI计算节点</div>
+            <div style="color:#8a3a6a;line-height:1.6;">顶板灾害预测<br>故障诊断模型</div>
+          </div>
+        </div>
+        <div class="proto-box">
+          <div class="proto-label">通信协议</div>
+          <div class="proto-value">MQTT + HTTP</div>
+          <div class="proto-note">MQTT 接收网关数据；HTTP 对外提供API接口供Web端和App调用</div>
+        </div>
+      </div>
+      <div class="device-grid">
+        <div class="device-card">
+          <div class="device-icon">🗄️</div>
+          <div class="device-name">时序数据库</div>
+          <div class="device-tag">InfluxDB / TDengine</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🤖</div>
+          <div class="device-name">AI计算节点</div>
+          <div class="device-tag">预警模型推理</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">📨</div>
+          <div class="device-name">MQTT Broker</div>
+          <div class="device-tag">消息中间件</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">⚙️</div>
+          <div class="device-name">规则引擎</div>
+          <div class="device-tag">自动告警触发</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🔌</div>
+          <div class="device-name">API 网关</div>
+          <div class="device-tag">HTTP 标准接口</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">📊</div>
+          <div class="device-name">数据清洗服务</div>
+          <div class="device-tag">质量过滤处理</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 6: 应用层 ═══════════════════════════ -->
+  <section class="slide" id="slide6">
+    <div class="slide-title">应用层 · Application Layer</div>
+    <div class="slide-subtitle">数据可视化 · 人机交互界面</div>
+    <div class="layer-layout layer-l4">
+      <div class="info-card">
+        <span class="layer-badge">🖥️ Layer 4 · 应用层</span>
+        <div class="info-role">
+          核心作用：将枯燥的数据转化为可视化界面，供管理人员实时监控、智能决策和远程操控掘进设备。
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:90px;background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.25);border-radius:8px;padding:10px;font-size:12px;color:#66bb6a;">
+            <div style="font-weight:700;margin-bottom:4px;">📺 集控大屏</div>
+            <div style="color:#4a7a4a;line-height:1.6;">数字孪生场景<br>实时报警展示</div>
+          </div>
+          <div style="flex:1;min-width:90px;background:rgba(255,193,7,.08);border:1px solid rgba(255,193,7,.25);border-radius:8px;padding:10px;font-size:12px;color:#ffd54f;">
+            <div style="font-weight:700;margin-bottom:4px;">🕹️ 远程操作台</div>
+            <div style="color:#8a7a3a;line-height:1.6;">掘进机远程<br>操控指令下发</div>
+          </div>
+          <div style="flex:1;min-width:90px;background:rgba(3,169,244,.08);border:1px solid rgba(3,169,244,.25);border-radius:8px;padding:10px;font-size:12px;color:#29b6f6;">
+            <div style="font-weight:700;margin-bottom:4px;">📱 移动终端</div>
+            <div style="color:#2a6a8a;line-height:1.6;">手机App<br>预警推送查看</div>
+          </div>
+        </div>
+        <div class="proto-box">
+          <div class="proto-label">通信协议</div>
+          <div class="proto-value">HTTP / HTTPS</div>
+          <div class="proto-note">互联网标准协议，负责网页和App与后台服务器之间的数据交互</div>
+        </div>
+      </div>
+      <div class="device-grid">
+        <div class="device-card">
+          <div class="device-icon">🖥️</div>
+          <div class="device-name">集控大屏</div>
+          <div class="device-tag">数字孪生展示</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🕹️</div>
+          <div class="device-name">远程操作台</div>
+          <div class="device-tag">掘进机操控</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">📱</div>
+          <div class="device-name">手机App</div>
+          <div class="device-tag">移动端预警</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🗺️</div>
+          <div class="device-name">GIS地图系统</div>
+          <div class="device-tag">人员位置可视化</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">📈</div>
+          <div class="device-name">报表系统</div>
+          <div class="device-tag">数据分析报表</div>
+        </div>
+        <div class="device-card">
+          <div class="device-icon">🔔</div>
+          <div class="device-name">报警系统</div>
+          <div class="device-tag">多级预警通知</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SLIDE 7: Protocol Summary ════════════════ -->
+  <section class="slide" id="slide7">
+    <div class="slide-title">协议总览</div>
+    <div class="slide-subtitle">各层通信协议一览</div>
+    <div class="divider"></div>
+    <table class="proto-table">
+      <thead>
+        <tr>
+          <th>层级</th>
+          <th>设备代表</th>
+          <th>通信协议</th>
+          <th>说明</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pt-layer pt-l1">🔬 感知层</span></td>
+          <td style="color:#aac4d8;">瓦斯传感器 · 激光雷达 · UWB标签</td>
+          <td class="pt-proto">Modbus RTU / RS485</td>
+          <td class="pt-note">工业传感器最通用语言，汇集至边缘网关</td>
+        </tr>
+        <tr>
+          <td><span class="pt-layer pt-l2">📡 网络层</span></td>
+          <td style="color:#aac4d8;">5G基站 · 环网交换机 · 边缘网关</td>
+          <td class="pt-proto">TCP/IP + MQTT</td>
+          <td class="pt-note">TCP/IP不丢包；MQTT轻量抗弱网，适合海量数据上传</td>
+        </tr>
+        <tr>
+          <td><span class="pt-layer pt-l3">🧠 平台层</span></td>
+          <td style="color:#aac4d8;">数据服务器 · AI计算节点</td>
+          <td class="pt-proto">MQTT + HTTP</td>
+          <td class="pt-note">MQTT接收网关数据；HTTP对外提供API接口</td>
+        </tr>
+        <tr>
+          <td><span class="pt-layer pt-l4">🖥️ 应用层</span></td>
+          <td style="color:#aac4d8;">集控大屏 · 操作台 · 手机App</td>
+          <td class="pt-proto">HTTP / HTTPS</td>
+          <td class="pt-note">互联网标准协议，负责网页与App的数据交互</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:32px;padding:16px 24px;background:rgba(0,188,212,.07);border:1px solid rgba(0,188,212,.2);border-radius:12px;max-width:900px;width:100%;font-size:13px;color:#5fa8c8;line-height:1.8;">
+      💡 <strong style="color:#00e5ff;">核心设计理念：</strong>
+      从物理信号到业务决策，四层架构实现数据的<span style="color:#69f0ae;">采集 → 传输 → 处理 → 呈现</span>全链路贯通，构建矿井安全智能管控闭环。
+    </div>
+  </section>
+
+</div><!-- /slides-wrapper -->
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prevSlide()">◀ 上一页</button>
+  <div class="dots" id="dots"></div>
+  <button onclick="nextSlide()">下一页 ▶</button>
+</div>
+<div class="slide-counter" id="counter">1 / 7</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dotsEl = document.getElementById('dots');
+  const counterEl = document.getElementById('counter');
+  let current = 0;
+
+  // build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    document.querySelectorAll('.dot')[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.querySelectorAll('.dot')[current].classList.add('active');
+    counterEl.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  function nextSlide() { goTo(current + 1); }
+  function prevSlide() { goTo(current - 1); }
+
+  // keyboard (arrow keys only; space is reserved for accessibility / screen readers)
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   prevSlide();
+  });
+</script>
+</body>
+</html>
